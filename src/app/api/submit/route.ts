@@ -7,7 +7,18 @@ export async function POST(req: Request, res: NextApiResponse) {
 
     try {
         const { firstName, lastName } = await req.json();
-        return NextResponse.json({ message: "success" }, { status: 200 });
+        return NextResponse.json(
+            {
+                submission_text: "Thank you for your submission",
+                redirect_url: null,
+                errors: [],
+                values: {
+                    firstName,
+                    lastName,
+                },
+            },
+            { status: 200 }
+        );
     } catch (e) {
         console.log(e);
     }

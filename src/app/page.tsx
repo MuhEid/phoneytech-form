@@ -1,113 +1,341 @@
-import Image from "next/image";
-
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+    return (
+        <form
+            className="max-w-3xl mx-auto p-8 bg-white shadow-md rounded-lg"
+            method="POST"
+            action=""
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+            <h1 className="text-2xl font-bold mb-6 text-center">
+                PhonyTechs Handy-Tablet & Computer Reparatur Service
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block">
+                    Vorname:
+                    <input
+                        type="text"
+                        name="firstName"
+                        className="mt-1 block w-full border rounded-md p-2"
+                        // onChange={handleInput}
+                    />
+                </label>
+                <label className="block">
+                    Nachname:
+                    <input
+                        type="text"
+                        name="lastName"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <label className="block">
+                    Straße:
+                    <input
+                        type="text"
+                        name="straße"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Hausnummer:
+                    <input
+                        type="text"
+                        name="hausnummer"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <label className="block">
+                    PLZ:
+                    <input
+                        type="text"
+                        name="plz"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Ort:
+                    <input
+                        type="text"
+                        name="ort"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <label className="block">
+                    Festnetz:
+                    <input
+                        type="text"
+                        name="festnetz"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Mobil:
+                    <input
+                        type="text"
+                        name="mobil"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <label className="block">
+                    E-Mail:
+                    <input
+                        type="email"
+                        name="email"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Gerät:
+                    <input
+                        type="text"
+                        name="gerät"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <label className="block">
+                    Farbe:
+                    <input
+                        type="text"
+                        name="farbe"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    PIN der Sim Karte:
+                    <input
+                        type="text"
+                        name="pinSimKarte"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <label className="block">
+                    Gerätesperrcode:
+                    <input
+                        type="text"
+                        name="gerätesperrcode"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Sperr Muster:
+                    <input
+                        type="text"
+                        name="sperrMuster"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            {/* <div className="mt-4">
+                <p className="font-semibold">Wie sind Sie auf uns aufmerksam geworden?</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                    <label className="flex items-center">
+                        <input type="checkbox" name="flyer" className="mr-2" />
+                        Flyer
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="google" className="mr-2" />
+                        Google
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="ebay" className="mr-2" />
+                        eBay
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="empfehlung" className="mr-2" />
+                        Empfehlung
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="sonstige" className="mr-2" />
+                        Sonstige
+                    </label>
+                </div>
+            </div> */}
+            {/* <div className="mt-4">
+                <p className="font-semibold">Repariert wird:</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                    <label className="flex items-center">
+                        <input type="checkbox" name="diagnose" className="mr-2" />
+                        Diagnose
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="software" className="mr-2" />
+                        Software
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="wasserschaden" className="mr-2" />
+                        Wasserschaden
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="akku" className="mr-2" />
+                        Akku
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="display" className="mr-2" />
+                        Display
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="touchglas" className="mr-2" />
+                        Touchglas
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="lautsprecher" className="mr-2" />
+                        Lautsprecher
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="mikrofon" className="mr-2" />
+                        Mikrofon
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="hörmuschel" className="mr-2" />
+                        Hörmuschel
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="anrufsensor" className="mr-2" />
+                        Anrufsensor
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="flaschlicht" className="mr-2" />
+                        Flasch Licht
+                    </label>
+                </div>
+            </div>
+            <div className="mt-4">
+                <p className="font-semibold">Mängel am Gerät vor der Reparatur:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                    <label className="flex items-center">
+                        <input type="checkbox" name="üblicheGebrauchsspuren" className="mr-2" />
+                        Übliche Gebrauchsspuren
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="deutlicheGebrauchsspuren" className="mr-2" />
+                        Deutliche Gebrauchsspuren
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="rahmenVerbogen" className="mr-2" />
+                        Rahmen verbogen
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="simEntfernt" className="mr-2" />
+                        SIM & SD Karte entfernt
+                    </label>
+                    <label className="flex items-center">
+                        <input type="checkbox" name="antenneEntfernt" className="mr-2" />
+                        Antenne entfernt
+                    </label>
+                </div>
+            </div>
+            <div className="mt-4">
+                <label className="flex items-center">
+                    <input type="checkbox" name="netzwlan" className="mr-2" />
+                    WLAN
+                </label>
+                <label className="flex items-center">
+                    <input type="checkbox" name="netzMobilfunk" className="mr-2" />
+                    Mobilfunk
+                </label>
+            </div>
+            <div className="mt-4">
+                <p className="font-semibold">Reparieren Sie mein Gerät bis:</p>
+                <label>
+                    <input
+                        type="date"
+                        name="repairDate"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <label className="block">
+                    Anzahlung/Deposit:
+                    <input
+                        type="number"
+                        name="anzahlung"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Gesamtpreis:
+                    <input
+                        type="number"
+                        name="gesamtpreis"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="mt-4">
+                <label className="block">
+                    Zubehör:
+                    <input
+                        type="text"
+                        name="zubehör"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Preis:
+                    <input
+                        type="number"
+                        name="preis"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="mt-4">
+                <label className="block">
+                    Kunde Unterschrift:
+                    <input
+                        type="text"
+                        name="kundeUnterschrift"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Datum/Ort:
+                    <input
+                        type="text"
+                        name="datumOrt"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div>
+            <div className="mt-4">
+                <p className="font-semibold">
+                    Ich bestätige hiermit, dass ich mit obere genannten Angabe einverstanden bin und
+                    Akzeptiere diese.
+                </p>
+                <label className="block">
+                    Kunde Unterschrift:
+                    <input
+                        type="text"
+                        name="kundeUnterschriftConfirm"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+                <label className="block">
+                    Datum/Ort:
+                    <input
+                        type="text"
+                        name="datumOrtConfirm"
+                        className="mt-1 block w-full border rounded-md p-2"
+                    />
+                </label>
+            </div> */}
+            <button
+                type="submit"
+                className="mt-6 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
+            >
+                Submit
+            </button>
+        </form>
+    );
 }

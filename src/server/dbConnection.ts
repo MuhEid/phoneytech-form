@@ -1,7 +1,7 @@
-import { connect } from "mongoose"
+import { connect } from "mongoose";
 
 const options = {
-    dbName: "handytechs",
+    dbName: "test",
 };
 
 const db_connection = () => {

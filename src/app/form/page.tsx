@@ -51,41 +51,11 @@ const RepairForm: React.FC = () => {
         }
     };
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container">
             {formSuccess ? (
                 <div>{formSuccessMessage}</div>
             ) : (
-                // <form action="" onSubmit={handleSubmitForm}>
-                //     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                //         <label className="block">
-                //             Vorname:
-                //             <input
-                //                 type="text"
-                //                 name="firstName"
-                //                 className="mt-1 block w-full border rounded-md p-2"
-                //                 value={formData.firstName}
-                //                 onChange={handleInput}
-                //             />
-                //         </label>
-                //         <label className="block">
-                //             Nachname:
-                //             <input
-                //                 type="text"
-                //                 name="lastName"
-                //                 className="mt-1 block w-full border rounded-md p-2"
-                //                 value={formData.lastName}
-                //                 onChange={handleInput}
-                //             />
-                //         </label>
-                //     </div>
-                //     <button
-                //         type="submit"
-                //         className="mt-6 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
-                //     >
-                //         Submit
-                //     </button>
-                <Form onSubmit={handleSubmitForm} handleInput={handleInput} />
-                // </form>
+                <Form onSubmit={handleSubmitForm} handleInput={handleInput} formData={formData} />
             )}
         </div>
     );

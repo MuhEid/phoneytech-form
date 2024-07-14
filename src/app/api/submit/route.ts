@@ -2,11 +2,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 export async function POST(req: Request, res: NextApiResponse) {
     if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method Not Allowed" });
+        return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
     }
 
     try {
-        const { firstName, lastName } = await req.json();
+        const { firstName, lastName, company, phone, email } = await req.json();
         return NextResponse.json(
             {
                 submission_text: "Thank you for your submission",
@@ -15,6 +15,9 @@ export async function POST(req: Request, res: NextApiResponse) {
                 values: {
                     firstName,
                     lastName,
+                    company,
+                    phone,
+                    email,
                 },
             },
             { status: 200 }

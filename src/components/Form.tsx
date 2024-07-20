@@ -1,7 +1,9 @@
 import React from "react";
 import DeviceMockup from "./DeviceMockup";
-import DeviceMockupBack from "./DeviceMockupBack";
-import Logo from "./LOGO";
+import Logo from "./Logo";
+import TermsAndConditions from "./TermsAndConditions";
+import { Checkbox } from "flowbite-react";
+import PatternLock from "./LockPattern";
 
 type formProps = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -17,14 +19,33 @@ type formProps = {
 
 export default function Form({ onSubmit, handleInput, formData }: formProps) {
     return (
-        <form onSubmit={onSubmit} className="my-5">
-            <div className="flex justify-between">
-                <Logo className="" />
-                <div>Content </div>
+        <form onSubmit={onSubmit} className="">
+            <div className="flex justify-between items-center mb-5">
+                <Logo className="w-5/12" />
+                <div className="w-1/4">
+                    <div className="flex w-full justify-around">
+                        <label className="flex items-center">
+                            <input type="checkbox" name="empfehlung" className="mr-2" />
+                            no
+                        </label>
+                        <label className="flex items-center">
+                            <input type="checkbox" name="empfehlung" className="mr-2" />
+                            ok
+                        </label>
+                    </div>
+                    <label className="flex items-center flex-col">
+                        auftragsnummer
+                        <input
+                            type="text"
+                            name="auftragsnummer"
+                            className="ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg"
+                        />
+                    </label>
+                </div>
 
-                <div className="">
+                <div className="w-1/3">
                     <p className="font-semibold">Wie sind Sie auf uns aufmerksam geworden?</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                         <label className="flex items-center">
                             <input type="checkbox" name="flyer" className="mr-2" />
                             Flyer
@@ -41,11 +62,12 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             <input type="checkbox" name="empfehlung" className="mr-2" />
                             Empfehlung
                         </label>
-                        <label className="flex items-center">
+
+                        <label htmlFor="other" className="flex items-center">
                             Sonstige
                             <input
                                 type="text"
-                                name="sonstige"
+                                name="other"
                                 className="ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg"
                             />
                         </label>
@@ -54,72 +76,177 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
             </div>
             {/*  SECOND SECTION */}
             <div className="flex w-full justify-between">
-                <div className="">
-                    <div>
+                <div className="w-5/12 pr-4">
+                    <div className="flex justify-between mb-3">
+                        <div className="">
+                            <label
+                                htmlFor="first-name"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                                vorname
+                            </label>
+                            <input
+                                type="text"
+                                name="firstName"
+                                id="first-name"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="John"
+                                required
+                                value={formData.firstName}
+                                onChange={handleInput}
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="last-name"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                            >
+                                nachname
+                            </label>
+                            <input
+                                type="text"
+                                name="lastName"
+                                id="last-name"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Doe"
+                                required
+                                value={formData.lastName}
+                                onChange={handleInput}
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-between mb-3">
+                        <div>
+                            <label
+                                htmlFor="first-name"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                                straße
+                            </label>
+                            <input
+                                type="text"
+                                name="festnetz"
+                                id="street"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Salzstadelgasse"
+                                required
+                                value={formData.firstName}
+                                onChange={handleInput}
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="house-number"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                            >
+                                huasnummer
+                            </label>
+                            <input
+                                type="text"
+                                name="houseNumber"
+                                id="house-number"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="1"
+                                required
+                                value={formData.lastName}
+                                onChange={handleInput}
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-between mb-3">
+                        <div>
+                            <label
+                                htmlFor="post-code"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                                plz
+                            </label>
+                            <input
+                                type="text"
+                                name="postCode"
+                                id="post-code"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="89073"
+                                required
+                                value={formData.firstName}
+                                onChange={handleInput}
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="last-name"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                            >
+                                ort
+                            </label>
+                            <input
+                                type="text"
+                                name="lastName"
+                                id="last-name"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="ulm"
+                                required
+                                value={formData.lastName}
+                                onChange={handleInput}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex justify-between mb-3">
+                        <div>
+                            <label
+                                htmlFor="first-name"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                                festnetz
+                            </label>
+                            <input
+                                type="text"
+                                name="festnetz"
+                                id="first-name"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="John"
+                                required
+                                value={formData.firstName}
+                                onChange={handleInput}
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="last-name"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                            >
+                                mobil
+                            </label>
+                            <input
+                                type="phone"
+                                name="phone"
+                                id="phone"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="+49 (1XX) XXXXXXXX"
+                                required
+                                value={formData.lastName}
+                                onChange={handleInput}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mb-3">
                         <label
-                            htmlFor="first-name"
+                            htmlFor="device"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                            First name
+                            gerät
                         </label>
                         <input
                             type="text"
-                            name="firstName"
-                            id="first-name"
+                            name="device"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="John"
-                            required
-                            value={formData.firstName}
-                            onChange={handleInput}
-                        />
-                    </div>
-                    <div>
-                        <label
-                            htmlFor="last-name"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                            Last name
-                        </label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            id="last-name"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Doe"
-                            required
-                            value={formData.lastName}
-                            onChange={handleInput}
-                        />
-                    </div>
-                    <div>
-                        <label
-                            htmlFor="company"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                            Company
-                        </label>
-                        <input
-                            type="text"
-                            name="company"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Flowbite"
-                            required
-                            value={formData.company}
-                            onChange={handleInput}
-                        />
-                    </div>
-                    <div>
-                        <label
-                            htmlFor="phone"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                            Phone number
-                        </label>
-                        <input
-                            type="tel"
-                            name="phone"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="123-45-678"
+                            placeholder=""
                             required
                             value={formData.phone}
                             onChange={handleInput}
@@ -136,14 +263,14 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             type="email"
                             name="email"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="john.doe@company.com"
+                            placeholder="john.doe@gmail.com"
                             required
                             value={formData.email}
                             onChange={handleInput}
                         />
                     </div>
                 </div>
-                <div className="flex">
+                <div className="flex w-1/4 flex-col pr-4">
                     <div>
                         <label
                             htmlFor="first-name"
@@ -183,7 +310,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             htmlFor=""
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                            farbe
+                            geräte entsperrcode
                         </label>
                         <input
                             type="text"
@@ -195,10 +322,11 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             onChange={handleInput}
                         />
                     </div>
+                    <PatternLock />
                 </div>
-                <div className="">
+                <div className="w-1/3">
                     <p className="font-semibold">Repariert wird:</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                         <label className="flex items-center">
                             <input type="checkbox" name="diagnose" className="mr-2" />
                             Diagnose
@@ -244,6 +372,19 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             Flasch Licht
                         </label>
                     </div>
+
+                    {/* <label
+                        htmlFor="message"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                        Your message
+                    </label> */}
+                    <textarea
+                        id="message"
+                        rows={4}
+                        className="block mt-6 p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Write your thoughts here..."
+                    ></textarea>
                 </div>
             </div>
 
@@ -276,10 +417,8 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             Antenne entfernt
                         </label>
                     </div>
-                    <div className="flex">
-                        <DeviceMockup className="" />
-                        <DeviceMockupBack />
-                    </div>
+
+                    <DeviceMockup className="" />
                 </div>
                 <div className="mt-4">
                     <label className="flex items-center">
@@ -380,8 +519,26 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
             </div>
 
             <button
+                type="button"
+                className="text-white my-4 bg-[#1f4696] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center "
+            >
+                Next
+            </button>
+            {true ? (
+                <div>
+                    <TermsAndConditions />
+                    <div>
+                        <label className="">
+                            <Checkbox name="agree" className="mr-4" />I read and agree
+                        </label>
+                    </div>
+                </div>
+            ) : (
+                ""
+            )}
+            <button
                 type="submit"
-                className="text-white my-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white my-4 bg-[#1f4696] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center"
             >
                 Submit
             </button>

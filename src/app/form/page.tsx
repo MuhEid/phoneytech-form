@@ -51,7 +51,7 @@ const RepairForm: React.FC = () => {
         }
     };
     return (
-        <div className="container">
+        <div className="container my-8 capitalize">
             {formSuccess ? (
                 <div>{formSuccessMessage}</div>
             ) : (

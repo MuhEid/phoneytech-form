@@ -4,6 +4,7 @@ import Logo from "./Logo";
 import TermsAndConditions from "./TermsAndConditions";
 import { Checkbox } from "flowbite-react";
 import PatternLock from "./LockPattern";
+import { EuroIcon } from "./EuroIcon";
 
 type formProps = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -21,7 +22,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
     return (
         <form onSubmit={onSubmit} className="">
             <div className="flex justify-between items-center mb-5">
-                <Logo className="w-5/12" />
+                <Logo className="w-5/12 p-5" />
                 <div className="w-1/4">
                     <div className="flex w-full justify-around">
                         <label className="flex items-center">
@@ -75,7 +76,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                 </div>
             </div>
             {/*  SECOND SECTION */}
-            <div className="flex w-full justify-between">
+            <div className="flex w-full justify-between mb-6">
                 <div className="w-5/12 pr-4">
                     <div className="flex justify-between mb-3">
                         <div className="">
@@ -387,9 +388,9 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                     ></textarea>
                 </div>
             </div>
-
-            <div>
-                <div className="mt-4 flex h-52">
+            {/* third section */}
+            <div className="mt-5">
+                <div className="mt-4 flex w-1/2">
                     <div className="flex flex-col justify-between">
                         <p className="font-semibold">Mängel am Gerät vor der Reparatur:</p>
                         <label className="flex items-center">
@@ -430,100 +431,116 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         Mobilfunk
                     </label>
                 </div>
-                <div className="mt-4">
-                    <p className="font-semibold">Reparieren Sie mein Gerät bis:</p>
-                    <label>
-                        <input
-                            type="date"
-                            name="repairDate"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
-                    </label>
+
+                <div className="flex justify-between items-center space-x-4">
+                    <div className="mt-4 ">
+                        <div className="flex justify-between space-x-4">
+                            <label
+                                htmlFor="message"
+                                className="flex-1 mb-2 text-gray-900 dark:text-white"
+                            >
+                                Zubehör:
+                                <textarea
+                                    id="message"
+                                    rows={3}
+                                    className="w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="zubehör..."
+                                ></textarea>
+                            </label>
+                            <label className="flex-1 mb-2 text-gray-900 dark:text-white">
+                                Preis:
+                                <textarea
+                                    id="price"
+                                    rows={3}
+                                    className="w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Preis..."
+                                ></textarea>
+                            </label>
+                        </div>
+
+                        <div className="flex-1">
+                            <label className="font-semibold">
+                                <Checkbox name="agree" className="mr-4" /> mir ist bewusst, dass ich
+                                bei wasserschäden keine garantie oder gewährleistung nach der
+                                repatur erhalte
+                            </label>
+                        </div>
+                    </div>
+                    <div className="w-1/3">
+                        <div className="">
+                            <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+                                Reparieren Sie mein Gerät bis:
+                            </p>
+                            <label>
+                                <input
+                                    type="date"
+                                    name="repairDate"
+                                    className="mt-1 block w-full border rounded-md p-2 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+                                />
+                            </label>
+                        </div>
+                        <label className="block">
+                            Anzahlung/Deposit:
+                            <div className="relative mt-1">
+                                <input
+                                    type="number"
+                                    name="deposit"
+                                    className="block w-full border rounded-md p-2 pr-10 text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+                                />
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <EuroIcon />
+                                </div>
+                            </div>
+                        </label>
+                        <label className="block">
+                            Gesamtpreis:
+                            <div className="relative mt-1">
+                                <input
+                                    type="number"
+                                    name="totalPrice"
+                                    className="block w-full border rounded-md p-2 pr-10 text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+                                />
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <EuroIcon />
+                                </div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <label className="block">
-                        Anzahlung/Deposit:
-                        <input
-                            type="number"
-                            name="anzahlung"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
-                    </label>
-                    <label className="block">
-                        Gesamtpreis:
-                        <input
-                            type="number"
-                            name="gesamtpreis"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
-                    </label>
-                </div>
+
                 <div className="mt-4">
-                    <label className="block">
-                        Zubehör:
-                        <input
-                            type="text"
-                            name="zubehör"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
+                    <label className="font-semibold">
+                        <Checkbox name="agree" className="mr-4" /> Ich bestätige hiermit, dass ich
+                        mit obere genannten Angabe einverstanden bin und Akzeptiere diese.
                     </label>
-                    <label className="block">
-                        Preis:
-                        <input
-                            type="number"
-                            name="preis"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
-                    </label>
-                </div>
-                <div className="mt-4">
-                    <label className="block">
-                        Kunde Unterschrift:
-                        <input
-                            type="text"
-                            name="kundeUnterschrift"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
-                    </label>
-                    <label className="block">
-                        Datum/Ort:
-                        <input
-                            type="text"
-                            name="datumOrt"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
-                    </label>
-                </div>
-                <div className="mt-4">
-                    <p className="font-semibold">
-                        Ich bestätige hiermit, dass ich mit obere genannten Angabe einverstanden bin
-                        und Akzeptiere diese.
-                    </p>
-                    <label className="block">
-                        Kunde Unterschrift:
-                        <input
-                            type="text"
-                            name="kundeUnterschriftConfirm"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
-                    </label>
-                    <label className="block">
-                        Datum/Ort:
-                        <input
-                            type="text"
-                            name="datumOrtConfirm"
-                            className="mt-1 block w-full border rounded-md p-2"
-                        />
-                    </label>
+
+                    <div className="flex justify-around py-5">
+                        <label className="block">
+                            Kunde Unterschrift:
+                            <input
+                                type="text"
+                                name="kundeUnterschriftConfirm"
+                                className="mt-1 block w-full border rounded-md p-2"
+                            />
+                        </label>
+                        <label className="block">
+                            Datum/Ort:
+                            <input
+                                type="text"
+                                name="datumOrtConfirm"
+                                className="mt-1 block w-full border rounded-md p-2"
+                            />
+                        </label>
+                    </div>
                 </div>
             </div>
 
-            <button
+            {/* <button
                 type="button"
                 className="text-white my-4 bg-[#1f4696] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center "
             >
                 Next
-            </button>
+            </button> */}
             {true ? (
                 <div>
                     <TermsAndConditions />

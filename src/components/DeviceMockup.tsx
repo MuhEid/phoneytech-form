@@ -8,7 +8,7 @@ export interface DeviceMockupProps {
 export default function DeviceMockup({ className }: DeviceMockupProps) {
     return (
         <div className={`${className}`}>
-            <Image src={Device} alt="front" />
+            <Image src={Device} alt="front" className="object-cover" />
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import phonyLogo from "../../logo.png";
+import phonyLogo from "../../public/images/logo.png";
 
 interface LogoProps {
     className?: string;

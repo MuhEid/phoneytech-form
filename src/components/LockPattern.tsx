@@ -21,7 +21,7 @@ const PatternLock: React.FC = () => {
 
     const patternSize = 3;
     const dotRadius = 22;
-    const dotMargin = 30;
+    const dotMargin = 25;
 
     useEffect(() => {
         const initializeDots = () => {
@@ -118,14 +118,14 @@ const PatternLock: React.FC = () => {
     };
 
     return (
-        <div className="mt-1">
-            sperr muster
-            <div className="relative mt-1 bg-white border-2 border-gray-300 rounded-lg">
+        <div className="mt-4">
+            <p className="text-center">sperr muster</p>
+            <div className="relative bg-white border-2 border-gray-300 rounded-lg">
                 <canvas
                     ref={canvasRef}
                     className="w-full h-full"
-                    width={250}
-                    height={250}
+                    width={230}
+                    height={230}
                     onMouseDown={handleMouseDown}
                     onMouseMove={handleMouseMove}
                     onMouseUp={handleMouseUp}

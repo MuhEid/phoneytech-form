@@ -16,7 +16,7 @@ const config: Config = {
             },
             container: {
                 center: true,
-                padding: "3rem", // default padding
+                padding: "3rem lg:2rem", // default padding
                 screens: {
                     sm: "100%", // full width on small screens
                     md: "100%", // full width on medium screens

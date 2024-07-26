@@ -10,6 +10,7 @@ const RepairForm: React.FC = () => {
         company: "",
         phone: "",
         email: "",
+        device: "",
     });
     const [formSuccess, setFormSuccess] = useState(false);
     const [formSuccessMessage, setFormSuccessMessage] = useState("");

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import DeviceMockup from "./DeviceMockup";
 import Logo from "./Logo";
 import TermsAndConditions from "./TermsAndConditions";
-import { Checkbox, Label, Radio } from "flowbite-react";
+import { Checkbox, Dropdown, Label, Radio } from "flowbite-react";
 import PatternLock from "./LockPattern";
 import { EuroIcon } from "./EuroIcon";
 import Image from "next/image";
 import WaterDamageIcon from "../../public/images/waterDamageIcon.jpg";
+import DropdownMenu from "./DropdownMenu";
 
 type formProps = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -29,7 +30,11 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
         const value = e.target.value;
         setWaterDamageSelected(value);
         setHasWaterDamage(value === "yes");
-        console.log(value, hasWaterDamage);
+    };
+    const [selectedAccessories, setSelectedAccessories] = useState<string[]>([]);
+
+    const handleSelectionChange = (newSelectedItems: string[]) => {
+        setSelectedAccessories(newSelectedItems);
     };
     return (
         <form onSubmit={onSubmit} className="">
@@ -392,31 +397,8 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
 
                 <div className="">
                     <div className="mt-4">
-                        <div className="flex justify-between space-x-4">
-                            <label
-                                htmlFor="message"
-                                className="flex-1 mb-2 text-gray-900 dark:text-white"
-                            >
-                                Zubehör:
-                                <textarea
-                                    id="message"
-                                    rows={3}
-                                    className="w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="zubehör..."
-                                ></textarea>
-                            </label>
-                            <label className="flex-1 mb-2 text-gray-900 dark:text-white">
-                                Preis:
-                                <textarea
-                                    id="price"
-                                    rows={3}
-                                    className="w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Preis..."
-                                ></textarea>
-                            </label>
-                        </div>
-
-                        <div className="my-4 grid ">
+                        <DropdownMenu onSelectionChange={handleSelectionChange} />
+                        <div className="my-4 grid">
                             <div>
                                 <p className="text-lg font-semibold ">
                                     hat das Gerät einen Wasserschaden?
@@ -577,7 +559,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
 
             <button
                 type="submit"
-                className="text-white my-4 bg-[#1f4696] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center"
+                className="text-white my-4 bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center"
             >
                 Submit
             </button>

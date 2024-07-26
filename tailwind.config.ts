@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import flowbite from "flowbite-react/tailwind";
 
 const config: Config = {
     content: [
@@ -6,6 +7,7 @@ const config: Config = {
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+        flowbite.content(),
     ],
     theme: {
         extend: {
@@ -25,8 +27,11 @@ const config: Config = {
                     "2xl": "1200px", // 1400px width on 2x extra-large screens
                 },
             },
+            colors: {
+                primary: "#1f4696",
+            },
         },
     },
-    plugins: [require("flowbite/plugin")],
+    plugins: [flowbite.plugin()],
 };
 export default config;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DeviceMockup from "./DeviceMockup";
 import Logo from "./Logo";
 import TermsAndConditions from "./TermsAndConditions";
-import { Checkbox, Dropdown, Label, Radio } from "flowbite-react";
+
 import PatternLock from "./LockPattern";
 import { EuroIcon } from "./EuroIcon";
 import Image from "next/image";
@@ -52,7 +52,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         <div className="w-1/2">
                             <label
                                 htmlFor="first-name"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                className="block mb-2 text-sm font-medium text-gray-900"
                             >
                                 vorname
                             </label>
@@ -60,7 +60,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 type="text"
                                 name="firstName"
                                 id="first-name"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 placeholder="John"
                                 required
                                 value={formData.firstName}
@@ -71,7 +71,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         <div className="w-1/2">
                             <label
                                 htmlFor="last-name"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                                className="block mb-2 text-sm font-medium text-gray-900"
                             >
                                 nachname
                             </label>
@@ -79,7 +79,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 type="text"
                                 name="lastName"
                                 id="last-name"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                 placeholder="Doe"
                                 required
                                 value={formData.lastName}
@@ -91,7 +91,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         <div className="w-1/2">
                             <label
                                 htmlFor="first-name"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                className="block mb-2 text-sm font-medium text-gray-900 "
                             >
                                 straße
                             </label>
@@ -110,7 +110,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         <div className="w-1/2">
                             <label
                                 htmlFor="house-number"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                                className="block mb-2 text-sm font-medium text-gray-900  "
                             >
                                 huasnummer
                             </label>
@@ -130,7 +130,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         <div className="w-1/2">
                             <label
                                 htmlFor="post-code"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                className="block mb-2 text-sm font-medium text-gray-900 "
                             >
                                 plz
                             </label>
@@ -178,7 +178,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 type="text"
                                 name="festnetz"
                                 id="first-name"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 placeholder="John"
                                 required
                                 value={formData.firstName}
@@ -197,7 +197,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 type="phone"
                                 name="phone"
                                 id="phone"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 d"
                                 placeholder="+49 (1XX) XXXXXXXX"
                                 required
                                 value={formData.lastName}
@@ -216,7 +216,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         <input
                             type="text"
                             name="device"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             placeholder=""
                             required
                             value={formData.device}
@@ -400,34 +400,37 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         <DropdownMenu onSelectionChange={handleSelectionChange} />
                         <div className="my-4 grid">
                             <div>
-                                <p className="text-lg font-semibold ">
+                                <p className="text-lg font-semibold">
                                     hat das Gerät einen Wasserschaden?
                                 </p>
-
                                 <div className="flex space-x-10">
                                     <div className="flex items-center gap-2 text-lg">
-                                        <Radio
+                                        <input
+                                            type="radio"
                                             id="water-damage-yes"
                                             name="waterDamage"
                                             value="yes"
+                                            className="radio radio-primary"
                                             checked={waterDamageSelected === "yes"}
                                             onChange={handleRadioChange}
                                         />
-                                        <Label className="text-lg" htmlFor="water-damage-yes">
+                                        <label className="text-lg" htmlFor="water-damage-yes">
                                             yes
-                                        </Label>
+                                        </label>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <Radio
+                                        <input
+                                            type="radio"
                                             id="water-damage-no"
                                             name="waterDamage"
                                             value="no"
+                                            className="radio radio-primary"
                                             checked={waterDamageSelected === "no"}
                                             onChange={handleRadioChange}
                                         />
-                                        <Label className="text-lg" htmlFor="water-damage-no">
+                                        <label className="text-lg" htmlFor="water-damage-no">
                                             no
-                                        </Label>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -441,9 +444,13 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                         height={250}
                                     />
                                     <label className="font-semibold">
-                                        <Checkbox name="agree" className="mr-4" /> mir ist bewusst,
-                                        dass ich bei wasserschäden keine garantie oder
-                                        gewährleistung nach der repatur erhalte
+                                        <input
+                                            type="checkbox"
+                                            name="agree"
+                                            className="checkbox checkbox-primary mr-4"
+                                        />
+                                        mir ist bewusst, dass ich bei wasserschäden keine garantie
+                                        oder gewährleistung nach der repatur erhalte
                                     </label>
                                 </div>
                             ) : (
@@ -451,6 +458,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             )}
                         </div>
                     </div>
+
                     <div className="my-4">
                         <div className="">
                             <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">
@@ -494,10 +502,20 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                 </div>
 
                 <div className="mt-4">
-                    <label className="font-semibold">
-                        <Checkbox name="agree" className="mr-4" /> Ich bestätige hiermit, dass ich
-                        mit obere genannten Angabe einverstanden bin und Akzeptiere diese.
-                    </label>
+                    <div className="form-control">
+                        <label className="cursor-pointer label">
+                            <span className="label-text">
+                                {" "}
+                                Ich bestätige hiermit, dass ich mit obere genannten Angabe
+                                einverstanden bin und Akzeptiere diese.
+                            </span>
+                            <input
+                                type="checkbox"
+                                defaultChecked
+                                className="checkbox checkbox-success"
+                            />
+                        </label>
+                    </div>
 
                     <div className="flex justify-around py-5">
                         <label className="block">
@@ -531,10 +549,19 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
             <div>
                 <TermsAndConditions />
                 <div className="mt-4">
-                    <label className="font-semibold">
-                        <Checkbox name="agree" className="mr-4" /> Ich bestätige hiermit, dass ich
-                        mit obere genannten Angabe einverstanden bin und Akzeptiere diese.
-                    </label>
+                    <div className="form-control">
+                        <label className="cursor-pointer label">
+                            <span className="label-text">
+                                Ich bestätige hiermit, dass ich mit obere genannten Angabe
+                                einverstanden bin und Akzeptiere diese.
+                            </span>
+                            <input
+                                type="checkbox"
+                                defaultChecked
+                                className="checkbox checkbox-success"
+                            />
+                        </label>
+                    </div>
 
                     <div className="flex justify-around py-5">
                         <label className="block">

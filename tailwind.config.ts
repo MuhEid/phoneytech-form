@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import flowbite from "flowbite-react/tailwind";
+import daisyui from "daisyui";
 
 const config: Config = {
     content: [
@@ -7,7 +7,6 @@ const config: Config = {
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-        flowbite.content(),
     ],
     theme: {
         extend: {
@@ -32,6 +31,9 @@ const config: Config = {
             },
         },
     },
-    plugins: [flowbite.plugin()],
+    plugins: [daisyui],
+    daisyui: {
+        themes: ["light", "dark", "cupcake"],
+    },
 };
 export default config;

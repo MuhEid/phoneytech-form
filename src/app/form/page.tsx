@@ -1,7 +1,7 @@
 "use client";
 import Form from "@/components/Form";
+import { generateOrderId } from "@/server/utils";
 import React, { useState } from "react";
-import { z } from "zod";
 
 const RepairForm: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -11,9 +11,11 @@ const RepairForm: React.FC = () => {
         phone: "",
         email: "",
         device: "",
+        orderId: "",
     });
     const [formSuccess, setFormSuccess] = useState(false);
     const [formSuccessMessage, setFormSuccessMessage] = useState("");
+
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fieldName = e.target.name;
         const fieldValue = e.target.value;
@@ -23,16 +25,22 @@ const RepairForm: React.FC = () => {
             [fieldName]: fieldValue,
         }));
     };
+
     const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        // Generate orderId and update formData
+        const newOrderId = generateOrderId();
+        const updatedFormData = { ...formData, orderId: newOrderId };
+
         try {
-            const response = await fetch("/api/submit", {
+            const response = await fetch("http://localhost:5000/api/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Access-Control-Allow-Headers": "*",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(updatedFormData),
             });
 
             if (!response.ok) {
@@ -40,7 +48,7 @@ const RepairForm: React.FC = () => {
             }
 
             // Handle response if necessary
-            const data: responseData = await response.json();
+            const data = await response.json();
             setFormSuccess(true);
             setFormSuccessMessage(data.submission_text);
 
@@ -51,6 +59,7 @@ const RepairForm: React.FC = () => {
             // Handle error state or display error message to the user
         }
     };
+
     return (
         <div className="container my-8 capitalize">
             {formSuccess ? (

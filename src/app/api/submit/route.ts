@@ -6,19 +6,14 @@ export async function POST(req: Request, res: NextApiResponse) {
     }
 
     try {
-        const { firstName, lastName, company, phone, email } = await req.json();
+        // const orderId = generateOrderId();
+        const data = await req.json();
         return NextResponse.json(
             {
                 submission_text: "Thank you for your submission",
                 redirect_url: null,
                 errors: [],
-                values: {
-                    firstName,
-                    lastName,
-                    company,
-                    phone,
-                    email,
-                },
+                values: data,
             },
             { status: 200 }
         );

@@ -37,7 +37,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
         setSelectedAccessories(newSelectedItems);
     };
     return (
-        <form onSubmit={onSubmit} className="">
+        <form onSubmit={onSubmit} className="flex flex-col">
             <div className="flex items-center mb-5">
                 <Logo className="w-5/12 p-5" />
                 {/* <p className="w-1/4">auftragsnummer:</p> */}
@@ -101,7 +101,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="street"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Salzstadelgasse"
-                                required
                                 value={formData.firstName}
                                 onChange={handleInput}
                             />
@@ -120,7 +119,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="house-number"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="1"
-                                required
                                 value={formData.lastName}
                                 onChange={handleInput}
                             />
@@ -140,7 +138,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="post-code"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="89073"
-                                required
                                 value={formData.firstName}
                                 onChange={handleInput}
                             />
@@ -159,7 +156,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="last-name"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="ulm"
-                                required
                                 value={formData.lastName}
                                 onChange={handleInput}
                             />
@@ -180,7 +176,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="first-name"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 placeholder="John"
-                                required
                                 value={formData.firstName}
                                 onChange={handleInput}
                             />
@@ -199,7 +194,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="phone"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 d"
                                 placeholder="+49 (1XX) XXXXXXXX"
-                                required
                                 value={formData.lastName}
                                 onChange={handleInput}
                             />
@@ -218,7 +212,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             name="device"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             placeholder=""
-                            required
                             value={formData.device}
                             onChange={handleInput}
                         />
@@ -235,7 +228,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                             name="email"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="john.doe@gmail.com"
-                            required
                             value={formData.email}
                             onChange={handleInput}
                         />
@@ -256,7 +248,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="farbe"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder=""
-                                required
                                 onChange={handleInput}
                             />
                         </div>
@@ -273,7 +264,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="sim-pin"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="123456"
-                                required
                                 onChange={handleInput}
                             />
                         </div>
@@ -290,7 +280,6 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                 id="farbe"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder=""
-                                required
                                 onChange={handleInput}
                             />
                         </div>
@@ -443,15 +432,19 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                                         width={250}
                                         height={250}
                                     />
-                                    <label className="font-semibold">
-                                        <input
-                                            type="checkbox"
-                                            name="agree"
-                                            className="checkbox checkbox-primary mr-4"
-                                        />
-                                        mir ist bewusst, dass ich bei wasserschäden keine garantie
-                                        oder gewährleistung nach der repatur erhalte
-                                    </label>
+                                    <div className="form-control">
+                                        <label className="cursor-pointer label">
+                                            <input
+                                                type="checkbox"
+                                                className="checkbox border border-primary mr-3"
+                                            />
+                                            <span className="text-lg font-semibold">
+                                                mir ist bewusst, dass ich bei wasserschäden keine
+                                                garantie oder gewährleistung nach der repatur
+                                                erhalte
+                                            </span>
+                                        </label>
+                                    </div>
                                 </div>
                             ) : (
                                 ""
@@ -502,35 +495,30 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                 </div>
 
                 <div className="mt-4">
-                    <div className="form-control">
+                    <div className="form-control w-7/12 ">
                         <label className="cursor-pointer label">
-                            <span className="label-text">
-                                {" "}
+                            <input type="checkbox" className="checkbox border border-primary" />
+                            <span className="text-lg font-semibold">
                                 Ich bestätige hiermit, dass ich mit obere genannten Angabe
                                 einverstanden bin und Akzeptiere diese.
                             </span>
-                            <input
-                                type="checkbox"
-                                defaultChecked
-                                className="checkbox checkbox-success"
-                            />
                         </label>
                     </div>
 
                     <div className="flex justify-around py-5">
                         <label className="block">
-                            Kunde Unterschrift:
-                            <input
-                                type="text"
-                                name="kundeUnterschriftConfirm"
-                                className="mt-1 block w-full border rounded-md p-2"
-                            />
-                        </label>
-                        <label className="block">
                             Datum/Ort:
                             <input
                                 type="text"
                                 name="datumOrtConfirm"
+                                className="mt-1 block w-full border rounded-md p-2"
+                            />
+                        </label>
+                        <label className="block">
+                            Kunde Unterschrift:
+                            <input
+                                type="text"
+                                name="kundeUnterschriftConfirm"
                                 className="mt-1 block w-full border rounded-md p-2"
                             />
                         </label>
@@ -540,7 +528,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         <textarea
                             id="notes"
                             rows={3}
-                            className="w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="w-full text-sm p-3 text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="notizen..."
                         ></textarea>
                     </label>
@@ -549,17 +537,13 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
             <div>
                 <TermsAndConditions />
                 <div className="mt-4">
-                    <div className="form-control">
+                    <div className="form-control w-7/12">
                         <label className="cursor-pointer label">
-                            <span className="label-text">
+                            <input type="checkbox" className="checkbox border border-primary" />
+                            <span className="label-text text-lg font-semibold">
                                 Ich bestätige hiermit, dass ich mit obere genannten Angabe
                                 einverstanden bin und Akzeptiere diese.
                             </span>
-                            <input
-                                type="checkbox"
-                                defaultChecked
-                                className="checkbox checkbox-success"
-                            />
                         </label>
                     </div>
 
@@ -586,7 +570,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
 
             <button
                 type="submit"
-                className="text-white my-4 bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center"
+                className="text-white my-4 self-center bg-main hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm !w-1/2 sm:w-auto px-8 py-2.5 text-center"
             >
                 Submit
             </button>

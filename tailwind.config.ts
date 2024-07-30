@@ -27,13 +27,25 @@ const config: Config = {
                 },
             },
             colors: {
-                primary: "#1f4696",
+                main: "#1f4696",
             },
         },
     },
     plugins: [daisyui],
     daisyui: {
-        themes: ["light", "dark", "cupcake"],
+        themes: [
+            {
+                light: {
+                    // importing the built-in 'light' theme
+                    // and setting the color values for '--primary-muted'
+                    // (numbers are OKLCH values)
+                    ...require("daisyui/src/theming/themes")["light"],
+                    main: "#1f4696",
+                },
+            },
+            "dark",
+            "cupcake",
+        ],
     },
 };
 export default config;

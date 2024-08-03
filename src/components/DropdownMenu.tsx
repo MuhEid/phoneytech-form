@@ -37,9 +37,9 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
     };
 
     return (
-        <div className="w-full flex items-center justify-between text-center my-10">
+        <div className="w-full flex flex-col md:flex-row items-center justify-between text-center my-10">
             <h4 className="font-semibold">choose which Zubehör you would like to add</h4>
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
                 <div className="dropdown w-full">
                     <label tabIndex={0} className="btn btn-primary bg-main text-white m-1 w-full">
                         Zubehör

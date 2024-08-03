@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import DeviceMockup from "./DeviceMockup";
 import Logo from "./Logo";
 import TermsAndConditions from "./TermsAndConditions";
-
 import PatternLock from "./LockPattern";
 import { EuroIcon } from "./EuroIcon";
 import Image from "next/image";
@@ -39,9 +38,9 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
     return (
         <form onSubmit={onSubmit} className="flex flex-col">
             <div className="flex items-center mb-5">
-                <Logo className="w-5/12 p-5" />
+                <Logo className="w-2/3 md:w-5/12 md:p-5" />
                 {/* <p className="w-1/4">auftragsnummer:</p> */}
-                <h1 className="text-4xl text-center w-7/12 font-semibold">
+                <h1 className="text-2xl md:text-4xl text-center md:w-7/12 font-semibold">
                     Gerätereparaturformular
                 </h1>
             </div>
@@ -233,7 +232,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         />
                     </div>
                 </div>
-                <div className="flex items-center justify-between pr-4">
+                <div className="flex items-center justify-between space-x-4">
                     <div className="grid w-2/3">
                         <div>
                             <label
@@ -288,7 +287,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                 </div>
                 <div className="">
                     <p className="font-semibold">Repariert wird:</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                    <div className="grid grid-cols-2 gap-4 mt-2">
                         <label className="flex items-center">
                             <input type="checkbox" name="diagnose" className="mr-2" />
                             Diagnose
@@ -338,8 +337,8 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
             </div>
             {/* third section */}
             <div className="mt-5">
-                <div className="my-4 flex">
-                    <div className=" w-1/3">
+                <div className="my-4 flex flex-col md:flex-row">
+                    <div className="w-full md:w-1/3">
                         <p className="font-semibold">Mängel am Gerät vor der Reparatur:</p>
                         <div className="grid grid-cols-1  gap-4 mt-2">
                             <label className="flex items-center">
@@ -381,7 +380,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         </div>
                     </div>
 
-                    <DeviceMockup className="" />
+                    <DeviceMockup className="my-5 md:my-0" />
                 </div>
 
                 <div className="">
@@ -495,9 +494,12 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                 </div>
 
                 <div className="mt-4">
-                    <div className="form-control w-7/12 ">
+                    <div className="form-control md:w-7/12 ">
                         <label className="cursor-pointer label">
-                            <input type="checkbox" className="checkbox border border-primary" />
+                            <input
+                                type="checkbox"
+                                className="checkbox border border-primary mr-3"
+                            />
                             <span className="text-lg font-semibold">
                                 Ich bestätige hiermit, dass ich mit obere genannten Angabe
                                 einverstanden bin und Akzeptiere diese.
@@ -505,7 +507,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         </label>
                     </div>
 
-                    <div className="flex justify-around py-5">
+                    <div className="flex justify-around py-5 space-x-4">
                         <label className="block">
                             Datum/Ort:
                             <input
@@ -537,9 +539,12 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
             <div>
                 <TermsAndConditions />
                 <div className="mt-4">
-                    <div className="form-control w-7/12">
+                    <div className="form-control md:w-7/12">
                         <label className="cursor-pointer label">
-                            <input type="checkbox" className="checkbox border border-primary" />
+                            <input
+                                type="checkbox"
+                                className="checkbox border border-primary mr-3"
+                            />
                             <span className="label-text text-lg font-semibold">
                                 Ich bestätige hiermit, dass ich mit obere genannten Angabe
                                 einverstanden bin und Akzeptiere diese.
@@ -547,7 +552,7 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
                         </label>
                     </div>
 
-                    <div className="flex justify-around py-5">
+                    <div className="flex justify-around space-x-4 py-5">
                         <label className="block">
                             Datum/Ort:
                             <input

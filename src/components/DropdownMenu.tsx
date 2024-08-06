@@ -38,7 +38,9 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
 
     return (
         <div className="w-full flex flex-col md:flex-row items-center justify-between text-center my-10">
-            <h4 className="font-semibold">choose which Zubehör you would like to add</h4>
+            <h4 className="font-semibold">
+                Wählen Sie aus, welches Zubehör Sie hinzufügen möchten
+            </h4>
             <div className="w-full md:w-1/2">
                 <div className="dropdown w-full">
                     <label tabIndex={0} className="btn btn-primary bg-main text-white m-1 w-full">
@@ -84,12 +86,3 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
 };
 
 export default DropdownMenu;
-
-//   <select className="select select-bordered w-full max-w-xs" onChange={handleSelectionChange}>
-//       <option disabled selected>
-//           Pick your favorite anime
-//       </option>
-//       <option>Naruto</option>
-//       <option>One Piece</option>
-//       <option>Dragon Ball</option>
-//   </select>;

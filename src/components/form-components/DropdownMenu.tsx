@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { TiDelete, TiArrowSortedDown } from "react-icons/ti";
+import { FaEuroSign } from "react-icons/fa";
 
 const accessoryItems: { name: string; price: number }[] = [
-    { name: "Hülle", price: 10 },
-    { name: "Panzerglas", price: 10 },
-    { name: "Ladegerät", price: 10 },
-    { name: "Ladekable", price: 10 },
-    { name: "Kopfhörer", price: 10 },
-    { name: "Datenübertragung", price: 10 },
+    { name: "Hülle", price: 10.49 },
+    { name: "Panzerglas", price: 10.0 },
+    { name: "Ladegerät", price: 10.19 },
+    { name: "Ladekabel", price: 25.48 },
+    { name: "Kopfhörer", price: 10.97 },
+    { name: "Datenübertragung", price: 13.15 },
 ];
 
 interface DropdownMenuProps {
@@ -16,30 +17,32 @@ interface DropdownMenuProps {
 
 const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
     const [selectedItems, setSelectedItems] = useState<{ name: string; price: number }[]>([]);
-
-    const [accessoryPrice, setAccesoryPrice] = useState<number>(0);
-    const handleAccesoryPrice = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const values = e.target.value;
-    };
+    const [totalPrice, setTotalPrice] = useState<number>(0);
 
     const handleSelect = (item: { name: string; price: number }) => {
-        if (selectedItems.map((itemObject) => itemObject.name === item.name)) {
+        if (!selectedItems.some((selectedItem) => selectedItem.name === item.name)) {
             const newSelectedItems = [...selectedItems, item];
             setSelectedItems(newSelectedItems);
             onSelectionChange(newSelectedItems);
-            console.log(selectedItems);
+            calculateTotalPrice(newSelectedItems);
         }
     };
 
     const handleRemove = (item: { name: string; price: number }) => {
-        const newSelectedItems = selectedItems.filter((ele) => ele !== item);
+        const newSelectedItems = selectedItems.filter((ele) => ele.name !== item.name);
         setSelectedItems(newSelectedItems);
         onSelectionChange(newSelectedItems);
+        calculateTotalPrice(newSelectedItems);
+    };
+
+    const calculateTotalPrice = (items: { name: string; price: number }[]) => {
+        const total = items.reduce((acc, item) => acc + item.price, 0);
+        setTotalPrice(total);
     };
 
     return (
         <div className="w-full flex flex-col md:flex-row items-center justify-between text-center my-10">
-            <h4 className="font-semibold">
+            <h4 className="font-semibold my-5">
                 Wählen Sie aus, welches Zubehör Sie hinzufügen möchten
             </h4>
             <div className="w-full md:w-1/2">
@@ -61,25 +64,27 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
                 </div>
                 <div className="mt-4">
                     {selectedItems.map((item, index) => (
-                        <div key={index} className="flex items-center">
-                            <div className="flex items-center justify-between text-gray-900 bg-white border border-gray-300 rounded-md px-5 py-1 my-1 w-full">
-                                <label>{item.name}</label>
-
-                                <input
-                                    type="number"
-                                    name={`${item}Price`}
-                                    placeholder="Preis here"
-                                    className="input border border-main focus:border-none w-1/4"
-                                />
+                        <div key={index} className="flex items-center justify-between">
+                            <div className="flex items-center text-gray-900 bg-white border border-gray-300 rounded-md px-5 py-1 my-1 w-1/2">
+                                <h4>{item.name}</h4>
                             </div>
+                            <span className="flex items-center ml-2">
+                                {item.price} <FaEuroSign />
+                            </span>
                             <button
-                                className="text-red-500 hover:text-red-700 ml-2"
+                                className="flex-1 text-red-500 hover:text-red-700 ml-2"
                                 onClick={() => handleRemove(item)}
                             >
                                 <TiDelete size={25} />
                             </button>
                         </div>
                     ))}
+                </div>
+                <div className="flex mt-4 p-1 justify-center items-center bg-gray-100 border border-gray-300 rounded-md text-gray-900">
+                    <span className="text-xl font-semibold">Total Price:</span>
+                    <span className="flex justify-center items-center text-xl ml-2">
+                        {totalPrice} <FaEuroSign />
+                    </span>
                 </div>
             </div>
         </div>

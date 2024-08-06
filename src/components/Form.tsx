@@ -7,21 +7,41 @@ import { EuroIcon } from "./EuroIcon";
 import Image from "next/image";
 import WaterDamageIcon from "../../public/images/waterDamageIcon.jpg";
 import DropdownMenu from "./DropdownMenu";
+import InputField from "./InputField";
+import RepairsToBeMade from "./RepairsToBeMade";
 
-type formProps = {
-    onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-    handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    formData: {
-        firstName: string;
-        lastName: string;
-        company: string;
-        phone: string;
-        email: string;
-        device: string;
-    };
+type FormData = {
+    firstName: string;
+    lastName: string;
+    company: string;
+    phone: string;
+    email: string;
+    device: string;
+    street: string;
+    houseNumber: string;
+    postCode: string;
+    city: string;
+    landline: string;
+    color: string;
+    simPin: string;
+    deviceUnlockCode: string;
+    repairDate: string;
+    deposit: number;
+    totalPrice: number;
+    waterDamage: string;
+    datumOrtConfirm: string;
+    kundeUnterschriftConfirm: string;
+    notes: string;
+    [key: string]: any;
 };
 
-export default function Form({ onSubmit, handleInput, formData }: formProps) {
+type FormProps = {
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+    handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    formData: FormData;
+};
+
+export default function Form({ onSubmit, handleInput, formData }: FormProps) {
     const [hasWaterDamage, setHasWaterDamage] = useState<boolean>(false);
     const [waterDamageSelected, setWaterDamageSelected] = useState<string | null>(null);
 
@@ -35,11 +55,12 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
     const handleSelectionChange = (newSelectedItems: string[]) => {
         setSelectedAccessories(newSelectedItems);
     };
+
+    const [selectedRepairs, setSelectedRepairs] = useState<string[]>([]);
     return (
         <form onSubmit={onSubmit} className="flex flex-col">
             <div className="flex items-center mb-5">
                 <Logo className="w-2/3 md:w-5/12 md:p-5" />
-                {/* <p className="w-1/4">auftragsnummer:</p> */}
                 <h1 className="text-2xl md:text-4xl text-center md:w-7/12 font-semibold">
                     Gerätereparaturformular
                 </h1>
@@ -48,240 +69,122 @@ export default function Form({ onSubmit, handleInput, formData }: formProps) {
             <div className="flex flex-col w-full mb-6">
                 <div className="w-full">
                     <div className="flex space-x-4 mb-3">
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="first-name"
-                                className="block mb-2 text-sm font-medium text-gray-900"
-                            >
-                                vorname
-                            </label>
-                            <input
-                                type="text"
-                                name="firstName"
-                                id="first-name"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                placeholder="John"
-                                required
-                                value={formData.firstName}
-                                onChange={handleInput}
-                            />
-                        </div>
-
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="last-name"
-                                className="block mb-2 text-sm font-medium text-gray-900"
-                            >
-                                nachname
-                            </label>
-                            <input
-                                type="text"
-                                name="lastName"
-                                id="last-name"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                placeholder="Doe"
-                                required
-                                value={formData.lastName}
-                                onChange={handleInput}
-                            />
-                        </div>
+                        <InputField
+                            label="Vorname"
+                            type="text"
+                            name="firstName"
+                            value={formData.firstName}
+                            onChange={handleInput}
+                            placeholder="John"
+                            required
+                        />
+                        <InputField
+                            label="Nachname"
+                            type="text"
+                            name="lastName"
+                            value={formData.lastName}
+                            onChange={handleInput}
+                            placeholder="Doe"
+                            required
+                        />
                     </div>
                     <div className="flex w-full space-x-4 mb-3">
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="first-name"
-                                className="block mb-2 text-sm font-medium text-gray-900 "
-                            >
-                                straße
-                            </label>
-                            <input
-                                type="text"
-                                name="festnetz"
-                                id="street"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Salzstadelgasse"
-                                value={formData.firstName}
-                                onChange={handleInput}
-                            />
-                        </div>
-
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="house-number"
-                                className="block mb-2 text-sm font-medium text-gray-900  "
-                            >
-                                huasnummer
-                            </label>
-                            <input
-                                type="text"
-                                name="houseNumber"
-                                id="house-number"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="1"
-                                value={formData.lastName}
-                                onChange={handleInput}
-                            />
-                        </div>
+                        <InputField
+                            label="Straße"
+                            type="text"
+                            name="street"
+                            value={formData.street}
+                            onChange={handleInput}
+                            placeholder="Salzstadelgasse"
+                        />
+                        <InputField
+                            label="Hausnummer"
+                            type="text"
+                            name="houseNumber"
+                            value={formData.houseNumber}
+                            onChange={handleInput}
+                            placeholder="1"
+                        />
                     </div>
                     <div className="flex space-x-4 mb-3">
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="post-code"
-                                className="block mb-2 text-sm font-medium text-gray-900 "
-                            >
-                                plz
-                            </label>
-                            <input
-                                type="text"
-                                name="postCode"
-                                id="post-code"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="89073"
-                                value={formData.firstName}
-                                onChange={handleInput}
-                            />
-                        </div>
-
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="last-name"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
-                            >
-                                ort
-                            </label>
-                            <input
-                                type="text"
-                                name="lastName"
-                                id="last-name"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="ulm"
-                                value={formData.lastName}
-                                onChange={handleInput}
-                            />
-                        </div>
+                        <InputField
+                            label="PLZ"
+                            type="text"
+                            name="postCode"
+                            value={formData.postCode}
+                            onChange={handleInput}
+                            placeholder="89073"
+                        />
+                        <InputField
+                            label="Ort"
+                            type="text"
+                            name="city"
+                            value={formData.city}
+                            onChange={handleInput}
+                            placeholder="Ulm"
+                        />
                     </div>
 
                     <div className="flex space-x-4 mb-3">
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="first-name"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >
-                                festnetz
-                            </label>
-                            <input
-                                type="text"
-                                name="festnetz"
-                                id="first-name"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                placeholder="John"
-                                value={formData.firstName}
-                                onChange={handleInput}
-                            />
-                        </div>
-
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="last-name"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
-                            >
-                                mobil
-                            </label>
-                            <input
-                                type="phone"
-                                name="phone"
-                                id="phone"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 d"
-                                placeholder="+49 (1XX) XXXXXXXX"
-                                value={formData.lastName}
-                                onChange={handleInput}
-                            />
-                        </div>
+                        <InputField
+                            label="Festnetz"
+                            type="text"
+                            name="landline"
+                            value={formData.landline}
+                            onChange={handleInput}
+                            placeholder="123456"
+                        />
+                        <InputField
+                            label="Mobil"
+                            type="phone"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleInput}
+                            placeholder="+49 (1XX) XXXXXXXX"
+                        />
                     </div>
-
-                    <div className="mb-3">
-                        <label
-                            htmlFor="device"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                            gerät
-                        </label>
-                        <input
+                    <div className="flex space-x-4 mb-3">
+                        <InputField
+                            label="Gerät"
                             type="text"
                             name="device"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder=""
                             value={formData.device}
                             onChange={handleInput}
                         />
-                    </div>
-                    <div className="mb-6">
-                        <label
-                            htmlFor="email"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                            Email address
-                        </label>
-                        <input
+                        <InputField
+                            label="Email address"
                             type="email"
                             name="email"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="john.doe@gmail.com"
                             value={formData.email}
                             onChange={handleInput}
+                            placeholder="john.doe@gmail.com"
                         />
                     </div>
                 </div>
                 <div className="flex items-center justify-between space-x-4">
-                    <div className="grid w-2/3">
-                        <div>
-                            <label
-                                htmlFor="first-name"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >
-                                farbe
-                            </label>
-                            <input
-                                type="text"
-                                name="farbe"
-                                id="farbe"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder=""
-                                onChange={handleInput}
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="sim-pin"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >
-                                PIN der SIM karte
-                            </label>
-                            <input
-                                type="text"
-                                name="simPin"
-                                id="sim-pin"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="123456"
-                                onChange={handleInput}
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor=""
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >
-                                geräte entsperrcode
-                            </label>
-                            <input
-                                type="text"
-                                name="farbe"
-                                id="farbe"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder=""
-                                onChange={handleInput}
-                            />
-                        </div>
+                    <div className="grid w-full">
+                        <InputField
+                            label="Farbe"
+                            type="text"
+                            name="color"
+                            value={formData.color}
+                            onChange={handleInput}
+                        />
+                        <InputField
+                            label="PIN der SIM Karte"
+                            type="text"
+                            name="simPin"
+                            value={formData.simPin}
+                            onChange={handleInput}
+                            placeholder="123456"
+                        />
+                        <InputField
+                            label="Geräte Entsperrcode"
+                            type="text"
+                            name="deviceUnlockCode"
+                            value={formData.deviceUnlockCode}
+                            onChange={handleInput}
+                        />
                     </div>
                     <PatternLock />
                 </div>

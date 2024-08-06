@@ -57,6 +57,10 @@ export default function Form({ onSubmit, handleInput, formData }: FormProps) {
     };
 
     const [selectedRepairs, setSelectedRepairs] = useState<string[]>([]);
+    const handleSelectedRepairs = (newSelectedRepair: string[]) => {
+        setSelectedRepairs(newSelectedRepair);
+    };
+
     return (
         <form onSubmit={onSubmit} className="flex flex-col">
             <div className="flex items-center mb-5">
@@ -188,55 +192,7 @@ export default function Form({ onSubmit, handleInput, formData }: FormProps) {
                     </div>
                     <PatternLock />
                 </div>
-                <div className="">
-                    <p className="font-semibold">Repariert wird:</p>
-                    <div className="grid grid-cols-2 gap-4 mt-2">
-                        <label className="flex items-center">
-                            <input type="checkbox" name="diagnose" className="mr-2" />
-                            Diagnose
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="software" className="mr-2" />
-                            Software
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="wasserschaden" className="mr-2" />
-                            Wasserschaden
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="akku" className="mr-2" />
-                            Akku
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="display" className="mr-2" />
-                            Display
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="touchglas" className="mr-2" />
-                            Touchglas
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="lautsprecher" className="mr-2" />
-                            Lautsprecher
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="mikrofon" className="mr-2" />
-                            Mikrofon
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="hörmuschel" className="mr-2" />
-                            Hörmuschel
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="anrufsensor" className="mr-2" />
-                            Anrufsensor
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" name="flaschlicht" className="mr-2" />
-                            Flasch Licht
-                        </label>
-                    </div>
-                </div>
+                <RepairsToBeMade onRepairsChange={handleSelectedRepairs} />
             </div>
             {/* third section */}
             <div className="mt-5">

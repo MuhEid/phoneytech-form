@@ -11,6 +11,21 @@ const RepairForm: React.FC = () => {
         phone: "",
         email: "",
         device: "",
+        street: "",
+        houseNumber: "",
+        postCode: "",
+        city: "",
+        landline: "",
+        color: "",
+        simPin: "",
+        deviceUnlockCode: "",
+        repairDate: "",
+        deposit: 0,
+        totalPrice: 0,
+        waterDamage: "",
+        datumOrtConfirm: "",
+        kundeUnterschriftConfirm: "",
+        notes: "",
         orderId: "",
     });
     const [formSuccess, setFormSuccess] = useState(false);
@@ -32,9 +47,10 @@ const RepairForm: React.FC = () => {
         // Generate orderId and update formData
         const newOrderId = generateOrderId();
         const updatedFormData = { ...formData, orderId: newOrderId };
+        console.log(updatedFormData);
 
         try {
-            const response = await fetch("http://localhost:5000/api/submit", {
+            const response = await fetch("http://localhost:3000/api/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

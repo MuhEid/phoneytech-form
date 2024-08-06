@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Device from "../../public/images/device.png";
+import Device from "../../../public/images/device.png";
 
 export interface DeviceMockupProps {
     className?: string;

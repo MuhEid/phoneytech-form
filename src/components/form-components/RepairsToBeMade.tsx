@@ -13,12 +13,12 @@ const repairList = [
     "anrufsensor",
     "flasch Licht",
 ];
+
 type RepairsToBeMadeProps = {
     onRepairsChange: (selectedItems: string[]) => void;
 };
 
 function RepairsToBeMade({ onRepairsChange }: RepairsToBeMadeProps) {
-    const checkedRepairList = [];
     const [checkedRepairs, setCheckedRepairs] = useState<string[]>([]);
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,14 +34,15 @@ function RepairsToBeMade({ onRepairsChange }: RepairsToBeMadeProps) {
     };
 
     return (
-        <div className="">
-            <p className="font-semibold">Repariert wird:</p>
+        <div className="mt-7">
+            <p className="text-xl mb-2 font-semibold">Repariert wird:</p>
             <div className="grid grid-cols-2 gap-4 mt-2 capitalize">
                 {repairList.map((repair) => (
                     <CheckboxField
                         key={repair}
                         label={repair}
                         name={repair}
+                        value={repair}
                         checked={checkedRepairs.includes(repair)}
                         onChange={handleCheckboxChange}
                     />

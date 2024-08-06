@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import DeviceMockup from "./DeviceMockup";
+import DeviceMockup from "./form-components/DeviceMockup";
 import Logo from "./Logo";
-import TermsAndConditions from "./TermsAndConditions";
-import PatternLock from "./LockPattern";
+import TermsAndConditions from "./form-components/TermsAndConditions";
+import PatternLock from "./form-components/LockPattern";
 import { EuroIcon } from "./EuroIcon";
 import Image from "next/image";
 import WaterDamageIcon from "../../public/images/waterDamageIcon.jpg";
-import DropdownMenu from "./DropdownMenu";
-import InputField from "./InputField";
-import RepairsToBeMade from "./RepairsToBeMade";
+import DropdownMenu from "./form-components/DropdownMenu";
+import InputField from "./form-components/InputField";
+import RepairsToBeMade from "./form-components/RepairsToBeMade";
 
 type FormData = {
     firstName: string;

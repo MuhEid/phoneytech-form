@@ -9,6 +9,7 @@ import WaterDamageIcon from "../../public/images/waterDamageIcon.jpg";
 import DropdownMenu from "./form-components/DropdownMenu";
 import InputField from "./form-components/InputField";
 import RepairsToBeMade from "./form-components/RepairsToBeMade";
+import ConfirmAndSign from "./form-components/ConfirmAndSign";
 
 type FormData = {
     firstName: string;
@@ -50,9 +51,11 @@ export default function Form({ onSubmit, handleInput, formData }: FormProps) {
         setWaterDamageSelected(value);
         setHasWaterDamage(value === "yes");
     };
-    const [selectedAccessories, setSelectedAccessories] = useState<string[]>([]);
+    const [selectedAccessories, setSelectedAccessories] = useState<
+        { name: string; price: number }[]
+    >([]);
 
-    const handleSelectionChange = (newSelectedItems: string[]) => {
+    const handleSelectionChange = (newSelectedItems: { name: string; price: number }[]) => {
         setSelectedAccessories(newSelectedItems);
     };
 
@@ -351,85 +354,10 @@ export default function Form({ onSubmit, handleInput, formData }: FormProps) {
                         </label>
                     </div>
                 </div>
-
-                <div className="mt-4">
-                    <div className="form-control md:w-7/12 ">
-                        <label className="cursor-pointer label">
-                            <input
-                                type="checkbox"
-                                className="checkbox border border-primary mr-3"
-                            />
-                            <span className="text-lg font-semibold">
-                                Ich bestätige hiermit, dass ich mit obere genannten Angabe
-                                einverstanden bin und Akzeptiere diese.
-                            </span>
-                        </label>
-                    </div>
-
-                    <div className="flex justify-around py-5 space-x-4">
-                        <label className="block">
-                            Datum/Ort:
-                            <input
-                                type="text"
-                                name="datumOrtConfirm"
-                                className="mt-1 block w-full border rounded-md p-2"
-                            />
-                        </label>
-                        <label className="block">
-                            Kunde Unterschrift:
-                            <input
-                                type="text"
-                                name="kundeUnterschriftConfirm"
-                                className="mt-1 block w-full border rounded-md p-2"
-                            />
-                        </label>
-                    </div>
-                    <label className="flex-1 mb-2 text-gray-900 dark:text-white">
-                        notizen:
-                        <textarea
-                            id="notes"
-                            rows={3}
-                            className="w-full text-sm p-3 text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="notizen..."
-                        ></textarea>
-                    </label>
-                </div>
             </div>
             <div>
-                <TermsAndConditions />
-                <div className="mt-4">
-                    <div className="form-control md:w-7/12">
-                        <label className="cursor-pointer label">
-                            <input
-                                type="checkbox"
-                                className="checkbox border border-primary mr-3"
-                            />
-                            <span className="label-text text-lg font-semibold">
-                                Ich bestätige hiermit, dass ich mit obere genannten Angabe
-                                einverstanden bin und Akzeptiere diese.
-                            </span>
-                        </label>
-                    </div>
-
-                    <div className="flex justify-around space-x-4 py-5">
-                        <label className="block">
-                            Datum/Ort:
-                            <input
-                                type="text"
-                                name="datumOrtConfirm"
-                                className="mt-1 block w-full border rounded-md p-2"
-                            />
-                        </label>
-                        <label className="block">
-                            Kunde Unterschrift:
-                            <input
-                                type="text"
-                                name="kundeUnterschriftConfirm"
-                                className="mt-1 block w-full border rounded-md p-2"
-                            />
-                        </label>
-                    </div>
-                </div>
+                {/* <TermsAndConditions /> */}
+                {/* <ConfirmAndSign /> */}
             </div>
 
             <button

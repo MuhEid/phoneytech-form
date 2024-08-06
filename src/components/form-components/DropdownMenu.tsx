@@ -1,36 +1,37 @@
 import { useState } from "react";
 import { TiDelete, TiArrowSortedDown } from "react-icons/ti";
 
-const accessoryItems: string[] = [
-    "Hülle",
-    "Panzerglas",
-    "Ladegerät",
-    "Ladekable",
-    "Kopfhörer",
-    "Datenübertragung",
+const accessoryItems: { name: string; price: number }[] = [
+    { name: "Hülle", price: 10 },
+    { name: "Panzerglas", price: 10 },
+    { name: "Ladegerät", price: 10 },
+    { name: "Ladekable", price: 10 },
+    { name: "Kopfhörer", price: 10 },
+    { name: "Datenübertragung", price: 10 },
 ];
 
 interface DropdownMenuProps {
-    onSelectionChange: (selectedItems: string[]) => void;
+    onSelectionChange: (selectedItems: { name: string; price: number }[]) => void;
 }
 
 const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const [selectedItems, setSelectedItems] = useState<{ name: string; price: number }[]>([]);
 
     const [accessoryPrice, setAccesoryPrice] = useState<number>(0);
     const handleAccesoryPrice = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const values = e.target.value;
     };
 
-    const handleSelect = (item: string) => {
-        if (!selectedItems.includes(item)) {
+    const handleSelect = (item: { name: string; price: number }) => {
+        if (selectedItems.map((itemObject) => itemObject.name === item.name)) {
             const newSelectedItems = [...selectedItems, item];
             setSelectedItems(newSelectedItems);
             onSelectionChange(newSelectedItems);
+            console.log(selectedItems);
         }
     };
 
-    const handleRemove = (item: string) => {
+    const handleRemove = (item: { name: string; price: number }) => {
         const newSelectedItems = selectedItems.filter((ele) => ele !== item);
         setSelectedItems(newSelectedItems);
         onSelectionChange(newSelectedItems);
@@ -53,7 +54,7 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
                     >
                         {accessoryItems.map((ele, index) => (
                             <li key={index} onClick={() => handleSelect(ele)}>
-                                <a>{ele}</a>
+                                <a>{ele.name}</a>
                             </li>
                         ))}
                     </ul>
@@ -62,7 +63,7 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
                     {selectedItems.map((item, index) => (
                         <div key={index} className="flex items-center">
                             <div className="flex items-center justify-between text-gray-900 bg-white border border-gray-300 rounded-md px-5 py-1 my-1 w-full">
-                                <label>{item}</label>
+                                <label>{item.name}</label>
 
                                 <input
                                     type="number"

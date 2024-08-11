@@ -1,8 +1,10 @@
 import React from "react";
 import InputField from "./InputField";
 import CheckboxField from "./CheckboxField";
-
-function ConfirmAndSign() {
+type ConfirmAndSignProps = {
+    notesBox: boolean;
+};
+function ConfirmAndSign({ notesBox }: ConfirmAndSignProps) {
     const currentDate = new Date().toDateString();
     const handleConfirmAndSign = () => {};
     const handleCheckboxChange = () => {};
@@ -30,15 +32,19 @@ function ConfirmAndSign() {
                     onChange={handleConfirmAndSign}
                 />
             </div>
-            <label className="form-control">
-                <div className="label">
-                    <span className="text-lg">notizen</span>
-                </div>
-                <textarea
-                    className="textarea textarea-bordered h-24"
-                    placeholder="notizen..."
-                ></textarea>
-            </label>
+            {notesBox ? (
+                <label className="form-control">
+                    <div className="label">
+                        <span className="text-lg">notizen</span>
+                    </div>
+                    <textarea
+                        className="textarea textarea-bordered h-24"
+                        placeholder="notizen..."
+                    ></textarea>
+                </label>
+            ) : (
+                ""
+            )}
         </div>
     );
 }

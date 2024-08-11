@@ -17,14 +17,12 @@ interface DropdownMenuProps {
 
 const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
     const [selectedItems, setSelectedItems] = useState<{ name: string; price: number }[]>([]);
-    const [totalPrice, setTotalPrice] = useState<number>(0);
 
     const handleSelect = (item: { name: string; price: number }) => {
         if (!selectedItems.some((selectedItem) => selectedItem.name === item.name)) {
             const newSelectedItems = [...selectedItems, item];
             setSelectedItems(newSelectedItems);
             onSelectionChange(newSelectedItems);
-            calculateTotalPrice(newSelectedItems);
         }
     };
 
@@ -32,16 +30,10 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
         const newSelectedItems = selectedItems.filter((ele) => ele.name !== item.name);
         setSelectedItems(newSelectedItems);
         onSelectionChange(newSelectedItems);
-        calculateTotalPrice(newSelectedItems);
-    };
-
-    const calculateTotalPrice = (items: { name: string; price: number }[]) => {
-        const total = items.reduce((acc, item) => acc + item.price, 0);
-        setTotalPrice(total);
     };
 
     return (
-        <div className="w-full flex flex-col md:flex-row items-center justify-between text-center my-10">
+        <div className="w-full flex flex-col md:flex-row items-center justify-between text-center mt-10">
             <h4 className="font-semibold my-5">
                 Wählen Sie aus, welches Zubehör Sie hinzufügen möchten
             </h4>
@@ -64,27 +56,21 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
                 </div>
                 <div className="mt-4">
                     {selectedItems.map((item, index) => (
-                        <div key={index} className="flex items-center justify-between">
+                        <div key={index} className="flex items-center justify-around">
                             <div className="flex items-center text-gray-900 bg-white border border-gray-300 rounded-md px-5 py-1 my-1 w-1/2">
                                 <h4>{item.name}</h4>
+                                <span className="flex-1 ml-2">{item.price}</span>
+                                <FaEuroSign />
                             </div>
-                            <span className="flex items-center ml-2">
-                                {item.price} <FaEuroSign />
-                            </span>
+
                             <button
-                                className="flex-1 text-red-500 hover:text-red-700 ml-2"
+                                className=" text-red-500 hover:text-red-700 ml-2"
                                 onClick={() => handleRemove(item)}
                             >
                                 <TiDelete size={25} />
                             </button>
                         </div>
                     ))}
-                </div>
-                <div className="flex mt-4 p-1 justify-center items-center bg-gray-100 border border-gray-300 rounded-md text-gray-900">
-                    <span className="text-xl font-semibold">Total Price:</span>
-                    <span className="flex justify-center items-center text-xl ml-2">
-                        {totalPrice} <FaEuroSign />
-                    </span>
                 </div>
             </div>
         </div>

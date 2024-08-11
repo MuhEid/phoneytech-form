@@ -3,13 +3,13 @@ import DeviceMockup from "./form-components/DeviceMockup";
 import Logo from "./Logo";
 import TermsAndConditions from "./form-components/TermsAndConditions";
 import PatternLock from "./form-components/LockPattern";
-import { EuroIcon } from "./EuroIcon";
 import Image from "next/image";
 import WaterDamageIcon from "../../public/images/waterDamageIcon.jpg";
 import DropdownMenu from "./form-components/DropdownMenu";
 import InputField from "./form-components/InputField";
 import RepairsToBeMade from "./form-components/RepairsToBeMade";
 import ConfirmAndSign from "./form-components/ConfirmAndSign";
+import { FaEuroSign } from "react-icons/fa";
 
 type FormData = {
     firstName: string;
@@ -45,24 +45,33 @@ type FormProps = {
 export default function Form({ onSubmit, handleInput, formData }: FormProps) {
     const [hasWaterDamage, setHasWaterDamage] = useState<boolean>(false);
     const [waterDamageSelected, setWaterDamageSelected] = useState<string | null>(null);
+    const [deposit, setDeposit] = useState<number>(0);
+    const [selectedRepairs, setSelectedRepairs] = useState<string[]>([]);
+    const [selectedAccessories, setSelectedAccessories] = useState<
+        { name: string; price: number }[]
+    >([]);
 
     const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value;
         setWaterDamageSelected(value);
         setHasWaterDamage(value === "yes");
     };
-    const [selectedAccessories, setSelectedAccessories] = useState<
-        { name: string; price: number }[]
-    >([]);
-
-    const handleSelectionChange = (newSelectedItems: { name: string; price: number }[]) => {
+    const handleSelectedAccessories = (newSelectedItems: { name: string; price: number }[]) => {
         setSelectedAccessories(newSelectedItems);
     };
-
-    const [selectedRepairs, setSelectedRepairs] = useState<string[]>([]);
     const handleSelectedRepairs = (newSelectedRepair: string[]) => {
         setSelectedRepairs(newSelectedRepair);
     };
+
+    const calculateTotalAccessoryPrice = () => {
+        return parseFloat(
+            selectedAccessories.reduce((acc, item) => acc + item.price, 0).toFixed(2)
+        );
+    };
+
+    const totalAccessoryPrice = calculateTotalAccessoryPrice();
+    const totalPrice = totalAccessoryPrice; /* + other form inputs' prices */
+    const remainingAmount = totalPrice - deposit;
 
     return (
         <form onSubmit={onSubmit} className="flex flex-col">
@@ -247,7 +256,16 @@ export default function Form({ onSubmit, handleInput, formData }: FormProps) {
 
                 <div className="">
                     <div className="mt-4">
-                        <DropdownMenu onSelectionChange={handleSelectionChange} />
+                        <div>
+                            <DropdownMenu onSelectionChange={handleSelectedAccessories} />
+                            <div className="flex items-center justify-end text-gray-900">
+                                <span className="text-lg font-semibold">Total:</span>
+                                <span className="flex justify-center items-center text-xl ml-2">
+                                    {totalPrice} <FaEuroSign />
+                                </span>
+                            </div>
+                        </div>
+
                         <div className="my-4 grid">
                             <div>
                                 <p className="text-lg font-semibold">
@@ -335,7 +353,7 @@ export default function Form({ onSubmit, handleInput, formData }: FormProps) {
                                     className="block w-full border rounded-md p-2 pr-10 text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <EuroIcon />
+                                    <FaEuroSign />
                                 </div>
                             </div>
                         </label>
@@ -348,16 +366,17 @@ export default function Form({ onSubmit, handleInput, formData }: FormProps) {
                                     className="block w-full border rounded-md p-2 pr-10 text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <EuroIcon />
+                                    <FaEuroSign />
                                 </div>
                             </div>
                         </label>
                     </div>
                 </div>
+                <ConfirmAndSign notesBox={true} />
             </div>
             <div>
-                {/* <TermsAndConditions /> */}
-                {/* <ConfirmAndSign /> */}
+                <TermsAndConditions />
+                <ConfirmAndSign notesBox={false} />
             </div>
 
             <button

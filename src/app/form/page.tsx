@@ -3,8 +3,31 @@ import Form from "@/components/Form";
 import { generateOrderId } from "@/server/utils";
 import React, { useState } from "react";
 
+export type FormData = {
+    firstName: string;
+    lastName: string;
+    company: string;
+    phone: string;
+    email: string;
+    device: string;
+    street: string;
+    houseNumber: string;
+    postCode: string;
+    city: string;
+    landline: string;
+    color: string;
+    simPin: string;
+    repairs: string[];
+    deviceUnlockCode: string;
+    repairDate: string;
+    deposit: number;
+    totalPrice: number;
+    notes: string;
+    [key: string]: any;
+};
+
 const RepairForm: React.FC = () => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         firstName: "",
         lastName: "",
         company: "",
@@ -18,13 +41,11 @@ const RepairForm: React.FC = () => {
         landline: "",
         color: "",
         simPin: "",
+        repairs: [],
         deviceUnlockCode: "",
         repairDate: "",
         deposit: 0,
         totalPrice: 0,
-        waterDamage: "",
-        datumOrtConfirm: "",
-        kundeUnterschriftConfirm: "",
         notes: "",
         orderId: "",
     });
@@ -39,6 +60,21 @@ const RepairForm: React.FC = () => {
             ...prevState,
             [fieldName]: fieldValue,
         }));
+    };
+
+    const handleNoneInputFields = (data: { name: keyof FormData; value: any }) => {
+        if (typeof data === "object" && data.name && data.value) {
+            setFormData((prevState) => {
+                // Check if the value has actually changed before updating the state
+                if (prevState[data.name] !== data.value) {
+                    return {
+                        ...prevState,
+                        [data.name]: data.value,
+                    };
+                }
+                return prevState;
+            });
+        }
     };
 
     const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -81,7 +117,12 @@ const RepairForm: React.FC = () => {
             {formSuccess ? (
                 <div>{formSuccessMessage}</div>
             ) : (
-                <Form onSubmit={handleSubmitForm} handleInput={handleInput} formData={formData} />
+                <Form
+                    onSubmit={handleSubmitForm}
+                    handleInput={handleInput}
+                    formData={formData}
+                    handleNoneInputFields={handleNoneInputFields}
+                />
             )}
         </div>
     );

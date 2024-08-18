@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DeviceMockup from "./form-components/DeviceMockup";
 import Logo from "./Logo";
 import TermsAndConditions from "./form-components/TermsAndConditions";
@@ -10,39 +10,21 @@ import InputField from "./form-components/InputField";
 import RepairsToBeMade from "./form-components/RepairsToBeMade";
 import ConfirmAndSign from "./form-components/ConfirmAndSign";
 import { FaEuroSign } from "react-icons/fa";
-
-type FormData = {
-    firstName: string;
-    lastName: string;
-    company: string;
-    phone: string;
-    email: string;
-    device: string;
-    street: string;
-    houseNumber: string;
-    postCode: string;
-    city: string;
-    landline: string;
-    color: string;
-    simPin: string;
-    deviceUnlockCode: string;
-    repairDate: string;
-    deposit: number;
-    totalPrice: number;
-    waterDamage: string;
-    datumOrtConfirm: string;
-    kundeUnterschriftConfirm: string;
-    notes: string;
-    [key: string]: any;
-};
+import { FormData } from "@/app/form/page";
 
 type FormProps = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
     handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleNoneInputFields: (data: { name: string; value: any }) => void;
     formData: FormData;
 };
 
-export default function Form({ onSubmit, handleInput, formData }: FormProps) {
+export default function Form({
+    onSubmit,
+    handleInput,
+    formData,
+    handleNoneInputFields,
+}: FormProps) {
     const [hasWaterDamage, setHasWaterDamage] = useState<boolean>(false);
     const [waterDamageSelected, setWaterDamageSelected] = useState<string | null>(null);
     const [deposit, setDeposit] = useState<number>(0);
@@ -68,6 +50,17 @@ export default function Form({ onSubmit, handleInput, formData }: FormProps) {
             selectedAccessories.reduce((acc, item) => acc + item.price, 0).toFixed(2)
         );
     };
+
+    useEffect(() => {
+        handleNoneInputFields({ name: "repairs", value: selectedRepairs });
+    }, [selectedRepairs, handleNoneInputFields]);
+
+    useEffect(() => {
+        handleNoneInputFields({ name: "accessories", value: selectedAccessories });
+    }, [selectedAccessories, handleNoneInputFields]);
+    useEffect(() => {
+        handleNoneInputFields({ name: "waterDamage", value: hasWaterDamage });
+    }, [hasWaterDamage, handleNoneInputFields]);
 
     const totalAccessoryPrice = calculateTotalAccessoryPrice();
     const totalPrice = totalAccessoryPrice; /* + other form inputs' prices */

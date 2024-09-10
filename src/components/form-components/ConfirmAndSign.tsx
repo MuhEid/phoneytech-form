@@ -40,7 +40,7 @@ function ConfirmAndSign({
                 className="font-semibold mb-5"
             />
 
-            <div className="flex items-center space-x-6 w-1/2">
+            <div className="flex items-end space-x-6 w-1/2">
                 <p className="text-lg">
                     Datum/Ort: <span>{currentDate}</span>
                 </p>

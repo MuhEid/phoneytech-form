@@ -5,7 +5,11 @@ type ConfirmAndSignProps = {
     notesBox: boolean;
 };
 function ConfirmAndSign({ notesBox }: ConfirmAndSignProps) {
-    const currentDate = new Date().toDateString();
+    const currentDate = new Date().toLocaleDateString("de-DE", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    });
     const handleConfirmAndSign = () => {};
     const handleCheckboxChange = () => {};
     // agreeWithTerms
@@ -21,14 +25,17 @@ function ConfirmAndSign({ notesBox }: ConfirmAndSignProps) {
                 className="font-semibold mb-5"
             />
 
-            <div className="flex items-end space-x-6">
-                {<p className="text-lg">Datum/Ort:{currentDate}</p>}
+            <div className="flex items-center space-x-6 w-1/2">
+                <p className="text-lg">
+                    Datum/Ort: <span>{currentDate}</span>
+                </p>
 
                 <InputField
                     type="text"
                     name="signature"
-                    label="Kunde Unterschrift"
+                    label="Kunde: (Unterschrift)"
                     value=""
+                    readOnly={true}
                     onChange={handleConfirmAndSign}
                 />
             </div>

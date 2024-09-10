@@ -8,6 +8,7 @@ type InputFieldProps = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
     required?: boolean;
+    readOnly?: boolean;
 };
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -15,6 +16,7 @@ const InputField: React.FC<InputFieldProps> = ({
     type,
     name,
     value,
+    readOnly = false,
     onChange,
     placeholder = "",
     required = false,
@@ -32,6 +34,7 @@ const InputField: React.FC<InputFieldProps> = ({
             value={value}
             onChange={onChange}
             required={required}
+            readOnly={readOnly}
         />
     </div>
 );

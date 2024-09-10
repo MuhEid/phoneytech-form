@@ -28,9 +28,9 @@ const TermsAndConditions = () => {
                 <section>
                     <h2 className="text-xl font-semibold">3. Preise</h2>
                     <p>
-                        Alle Preise sind in der Währung Euro angegeben einschließlich der
-                        gesetzlichen Mehrwertsteuer. Für eine Diagnose bei umfangreichen oder
-                        unbekannten Schäden berechnen wir pauschal 30€.
+                        Alle Preise sind in der Währung Euro angegeben, einschließlich der
+                        gesetzlichen Mehrwertsteuer. Für eine Diagnose, bei umfangreichen oder
+                        unbekannten Schäden, berechnen wir pauschal 30€ und beim Wasserschaden 50€.
                     </p>
                 </section>
                 <section>

@@ -1,24 +1,13 @@
 import { useState } from "react";
 import CheckboxField from "./CheckboxField";
 
-const repairList = [
-    "diagnose",
-    "software",
-    "wasserschaden",
-    "akku",
-    "touchglas",
-    "lautsprecher",
-    "mikrofon",
-    "hörmuschel",
-    "anrufsensor",
-    "flasch Licht",
-];
-
 type RepairsToBeMadeProps = {
-    onRepairsChange: (selectedItems: string[]) => void;
+    repairOptions: string[]; // Generic list of options passed as a prop
+    onRepairsChange: (selectedItems: string[], fieldName: string) => void; // Add fieldName to track multiple usages
+    fieldName: string; // Add fieldName to identify this group of checkboxes
 };
 
-function RepairsToBeMade({ onRepairsChange }: RepairsToBeMadeProps) {
+function RepairsToBeMade({ repairOptions, onRepairsChange, fieldName }: RepairsToBeMadeProps) {
     const [checkedRepairs, setCheckedRepairs] = useState<string[]>([]);
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +17,7 @@ function RepairsToBeMade({ onRepairsChange }: RepairsToBeMadeProps) {
                 ? [...prevCheckedRepairs, value]
                 : prevCheckedRepairs.filter((repair) => repair !== value);
 
-            onRepairsChange(updatedRepairs);
+            onRepairsChange(updatedRepairs, fieldName); // Pass the updated list and the fieldName
             return updatedRepairs;
         });
     };
@@ -37,7 +26,7 @@ function RepairsToBeMade({ onRepairsChange }: RepairsToBeMadeProps) {
         <div className="mt-7">
             <p className="text-xl mb-2 font-semibold">Repariert wird:</p>
             <div className="grid grid-cols-2 gap-4 mt-2 capitalize">
-                {repairList.map((repair) => (
+                {repairOptions.map((repair) => (
                     <CheckboxField
                         key={repair}
                         label={repair}

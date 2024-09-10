@@ -3,7 +3,7 @@ import React from "react";
 type CheckboxFieldProps = {
     label: string;
     name: string;
-    value: string;
+    value?: string;
     className?: string;
     checked: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

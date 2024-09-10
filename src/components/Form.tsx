@@ -68,6 +68,7 @@ export default function Form({
     const [selectedAccessories, setSelectedAccessories] = useState<
         { name: string; price: number }[]
     >([]);
+    const [agreeWithTerms, setAgreeWithTerms] = useState<boolean>(false);
 
     const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value;
@@ -83,6 +84,9 @@ export default function Form({
             [fieldName]: newSelectedRepairs,
         }));
     };
+    const handleAgreeWithTerms = (newAgreeWithTerms: boolean) => {
+        setAgreeWithTerms(newAgreeWithTerms);
+    };
 
     const calculateTotalAccessoryPrice = () => {
         return parseFloat(
@@ -97,9 +101,14 @@ export default function Form({
     useEffect(() => {
         handleNoneInputFields({ name: "accessories", value: selectedAccessories });
     }, [selectedAccessories, handleNoneInputFields]);
+
     useEffect(() => {
         handleNoneInputFields({ name: "waterDamage", value: hasWaterDamage });
     }, [hasWaterDamage, handleNoneInputFields]);
+
+    useEffect(() => {
+        handleNoneInputFields({ name: "agreeWithTerms", value: agreeWithTerms });
+    }, [agreeWithTerms, handleNoneInputFields]);
 
     const totalAccessoryPrice = calculateTotalAccessoryPrice();
     const totalPrice = totalAccessoryPrice; /* + other form inputs' prices */
@@ -107,9 +116,9 @@ export default function Form({
 
     return (
         <form onSubmit={onSubmit} className="flex flex-col">
-            <div className="flex items-center mb-5">
+            <div className="flex flex-col md:flex-row items-center mb-5">
                 <Logo className="w-2/3 md:w-5/12 md:p-5" />
-                <h1 className="text-2xl md:text-4xl text-center md:w-7/12 font-semibold">
+                <h1 className="text-2xl md:text-4xl text-center md:w-7/12 font-bold my-4 ">
                     Gerätereparaturformular
                 </h1>
             </div>
@@ -417,7 +426,7 @@ export default function Form({
                         </div>
                     </div>
                 </div>
-                <ConfirmAndSign notesBox={true} />
+                {/* <ConfirmAndSign notesBox={true} /> */}
             </div>
             <div className="my-4">
                 {/* <div className="p-6">
@@ -504,6 +513,8 @@ export default function Form({
                 <ConfirmAndSign
                     notesBox={false}
                     label="Hiermit bestätige ich, dass ich mit den oben genannten Bedingungen einverstanden bin und diese akzeptiere."
+                    onAgreeWithTerms={handleAgreeWithTerms}
+                    agreeWithTerms={agreeWithTerms}
                 />
             </div>
 

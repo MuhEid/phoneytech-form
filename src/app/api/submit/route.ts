@@ -6,7 +6,6 @@ export async function POST(req: Request, res: NextApiResponse) {
     }
 
     try {
-        // const orderId = generateOrderId();
         const data = await req.json();
         return NextResponse.json(
             {

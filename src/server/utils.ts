@@ -1,18 +1,4 @@
-// import nodemailer from "nodemailer";
 import { customAlphabet } from "nanoid";
-
-export const sendEmail = () => {
-    // const transporter = nodemailer.createTransport({
-    //     host: "localhost",
-    //     service: "gmail",
-    //     port: 587,
-    //     secure: false,
-    //     auth: {
-    //         user: process.env.EMAIL,
-    //         // pass:
-    //     },
-    // });
-};
 
 export const generateOrderId = () => {
     const currentYear = new Date().getFullYear();

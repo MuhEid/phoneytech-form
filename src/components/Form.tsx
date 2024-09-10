@@ -9,8 +9,9 @@ import DropdownMenu from "./form-components/DropdownMenu";
 import InputField from "./form-components/InputField";
 import RepairsToBeMade from "./form-components/RepairsToBeMade";
 import ConfirmAndSign from "./form-components/ConfirmAndSign";
-import { FaEuroSign } from "react-icons/fa";
+import { FaAngleRight, FaEuroSign } from "react-icons/fa";
 import { FormData } from "@/app/form/page";
+import Link from "next/link";
 
 type FormProps = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -418,8 +419,8 @@ export default function Form({
                 </div>
                 <ConfirmAndSign notesBox={true} />
             </div>
-            <div>
-                <div className="p-6 bg-white shadow-md rounded-lg">
+            <div className="my-4">
+                {/* <div className="p-6">
                     <div className="mb-4">
                         <h2 className="text-lg font-semibold mb-2">Checkliste:</h2>
                         <ul className="list-none">
@@ -491,14 +492,24 @@ export default function Form({
                             </li>
                         </ul>
                     </div>
+                </div> */}
+                <div className="text-white flex w-1/2 items-center justify-around bg-main hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none">
+                    <Link href="/terms" className="">
+                        Allgemeine Geschäftsbedingungen lesen
+                    </Link>
+                    <FaAngleRight size={16} />
                 </div>
-                <TermsAndConditions />
-                <ConfirmAndSign notesBox={false} />
+
+                {/* <TermsAndConditions /> */}
+                <ConfirmAndSign
+                    notesBox={false}
+                    label="Hiermit bestätige ich, dass ich mit den oben genannten Bedingungen einverstanden bin und diese akzeptiere."
+                />
             </div>
 
             <button
                 type="submit"
-                className="text-white my-4 self-center bg-main hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm !w-1/2 sm:w-auto px-8 py-2.5 text-center"
+                className="text-white my-4 self-center bg-main hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm !w-1/2 sm:w-auto px-8 py-2.5 text-center"
             >
                 Submit
             </button>

@@ -3,8 +3,9 @@ import InputField from "./InputField";
 import CheckboxField from "./CheckboxField";
 type ConfirmAndSignProps = {
     notesBox: boolean;
+    label?: string;
 };
-function ConfirmAndSign({ notesBox }: ConfirmAndSignProps) {
+function ConfirmAndSign({ notesBox, label }: ConfirmAndSignProps) {
     const currentDate = new Date().toLocaleDateString("de-DE", {
         year: "numeric",
         month: "short",
@@ -16,8 +17,11 @@ function ConfirmAndSign({ notesBox }: ConfirmAndSignProps) {
     return (
         <div className="mt-4">
             <CheckboxField
-                label="Ich bestätige hiermit, dass ich mit obere genannten Angabe einverstanden bin
-                        und Akzeptiere diese."
+                label={
+                    label
+                        ? label
+                        : "Ich bestätige hiermit, dass ich mit obere genannten Angabe einverstanden bin und Akzeptiere diese."
+                }
                 name="agreeWithTerms"
                 checked={true}
                 value="agreee"

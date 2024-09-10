@@ -18,6 +18,38 @@ type FormProps = {
     handleNoneInputFields: (data: { name: string; value: any }) => void;
     formData: FormData;
 };
+const repairListOne = [
+    "diagnose",
+    "software",
+    "wasserschaden",
+    "akku",
+    "touchglas",
+    "lautsprecher",
+    "mikrofon",
+    "hörmuschel",
+    "Rückseite/Rahmen",
+    "flasch Licht",
+];
+const repairListTwo = [
+    "touch funktion",
+    "lautsprecher",
+    "mikrofon",
+    "hormuschel",
+    "anruf sensor",
+    "flasch licht",
+    "netz WLAN",
+    "netz mobilfunk",
+    "buchse kopfhorer",
+    "buchse lade",
+    "taste volume",
+    "tatse stumm",
+    "taste power",
+    "taste home",
+    "ID finger",
+    "ID gesicht",
+    "kamera haupt",
+    "kamera front",
+];
 
 export default function Form({
     onSubmit,
@@ -28,7 +60,10 @@ export default function Form({
     const [hasWaterDamage, setHasWaterDamage] = useState<boolean>(false);
     const [waterDamageSelected, setWaterDamageSelected] = useState<string | null>(null);
     const [deposit, setDeposit] = useState<number>(0);
-    const [selectedRepairs, setSelectedRepairs] = useState<string[]>([]);
+    const [selectedRepairs, setSelectedRepairs] = useState({
+        repairListOne: [] as string[],
+        repairListTwo: [] as string[],
+    });
     const [selectedAccessories, setSelectedAccessories] = useState<
         { name: string; price: number }[]
     >([]);
@@ -41,8 +76,11 @@ export default function Form({
     const handleSelectedAccessories = (newSelectedItems: { name: string; price: number }[]) => {
         setSelectedAccessories(newSelectedItems);
     };
-    const handleSelectedRepairs = (newSelectedRepair: string[]) => {
-        setSelectedRepairs(newSelectedRepair);
+    const handleSelectedRepairs = (newSelectedRepairs: string[], fieldName: string) => {
+        setSelectedRepairs((prev) => ({
+            ...prev,
+            [fieldName]: newSelectedRepairs,
+        }));
     };
 
     const calculateTotalAccessoryPrice = () => {
@@ -136,7 +174,7 @@ export default function Form({
 
                     <div className="flex space-x-4 mb-3">
                         <InputField
-                            label="Festnetz"
+                            label="IMEI/SN"
                             type="text"
                             name="landline"
                             value={formData.landline}
@@ -195,9 +233,13 @@ export default function Form({
                             onChange={handleInput}
                         />
                     </div>
-                    <PatternLock />
+                    {/* <PatternLock /> */}
                 </div>
-                <RepairsToBeMade onRepairsChange={handleSelectedRepairs} />
+                <RepairsToBeMade
+                    repairOptions={repairListOne}
+                    onRepairsChange={handleSelectedRepairs}
+                    fieldName="repairListOne"
+                />
             </div>
             {/* third section */}
             <div className="mt-5">
@@ -231,21 +273,18 @@ export default function Form({
                             </label>
                             <label className="flex items-center">
                                 <input type="checkbox" name="antenneEntfernt" className="mr-2" />
-                                Antenne entfernt
-                            </label>
-                            <label className="flex items-center">
-                                <input type="checkbox" name="netzwlan" className="mr-2" />
-                                WLAN
-                            </label>
-                            <label className="flex items-center">
-                                <input type="checkbox" name="netzMobilfunk" className="mr-2" />
-                                Mobilfunk
+                                Hülle Entfernt
                             </label>
                         </div>
                     </div>
 
                     <DeviceMockup className="my-5 md:my-0" />
                 </div>
+                <RepairsToBeMade
+                    repairOptions={repairListTwo}
+                    onRepairsChange={handleSelectedRepairs}
+                    fieldName="repairListTwo"
+                />
 
                 <div className="">
                     <div className="mt-4">
@@ -325,49 +364,134 @@ export default function Form({
                     </div>
 
                     <div className="my-4">
-                        <div className="">
-                            <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+                        {/* Reusable Input Group */}
+                        <div className="mb-2">
+                            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                                 Reparieren Sie mein Gerät bis:
-                            </p>
-                            <label>
-                                <input
-                                    type="date"
-                                    name="repairDate"
-                                    className="mt-1 block w-full border rounded-md p-2 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
-                                />
                             </label>
+                            <div className="relative">
+                                <input
+                                    type="number"
+                                    name="repairDate"
+                                    className="block w-full border rounded-md p-2 pr-10 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+                                />
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <FaEuroSign />
+                                </div>
+                            </div>
                         </div>
-                        <label className="block">
-                            Anzahlung/Deposit:
-                            <div className="relative mt-1">
+
+                        {/* Deposit Field */}
+                        <div className="mb-2">
+                            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                                Anzahlung/Deposit:
+                            </label>
+                            <div className="relative">
                                 <input
                                     type="number"
                                     name="deposit"
-                                    className="block w-full border rounded-md p-2 pr-10 text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+                                    className="block w-full border rounded-md p-2 pr-10 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <FaEuroSign />
                                 </div>
                             </div>
-                        </label>
-                        <label className="block">
-                            Gesamtpreis:
-                            <div className="relative mt-1">
+                        </div>
+
+                        {/* Total Price Field */}
+                        <div className="mb-2">
+                            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                                Gesamtpreis:
+                            </label>
+                            <div className="relative">
                                 <input
                                     type="number"
                                     name="totalPrice"
-                                    className="block w-full border rounded-md p-2 pr-10 text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+                                    className="block w-full border rounded-md p-2 pr-10 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <FaEuroSign />
                                 </div>
                             </div>
-                        </label>
+                        </div>
                     </div>
                 </div>
                 <ConfirmAndSign notesBox={true} />
             </div>
             <div>
+                <div className="p-6 bg-white shadow-md rounded-lg">
+                    <div className="mb-4">
+                        <h2 className="text-lg font-semibold mb-2">Checkliste:</h2>
+                        <ul className="list-none">
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Touch Funktion
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Lautsprecher
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Mikrofon
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Hörmuschel
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Anruf Sensor
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Flasch Licht
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Netz
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> WL/WLAN
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Mobilfunk
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Buchse
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h2 className="text-lg font-semibold mb-2">Repariert sein:</h2>
+                        <ul className="list-none">
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Diagnose
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Software
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Wasserschade
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Akku
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Displayschade
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Kamera
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Netz
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Buchse
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> Tasten
+                            </li>
+                            <li>
+                                <input type="checkbox" className="mr-2 checkbox" /> ID
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <TermsAndConditions />
                 <ConfirmAndSign notesBox={false} />
             </div>

@@ -83,10 +83,10 @@ const RepairForm: React.FC = () => {
         // Generate orderId and update formData
         const newOrderId = generateOrderId();
         const updatedFormData = { ...formData, orderId: newOrderId };
-        console.log(updatedFormData);
 
         try {
-            const response = await fetch("http://localhost:3000/api/submit", {
+            // Submit form data to the database API
+            const submitResponse = await fetch("/api/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -95,20 +95,43 @@ const RepairForm: React.FC = () => {
                 body: JSON.stringify(updatedFormData),
             });
 
-            if (!response.ok) {
+            if (!submitResponse.ok) {
                 throw new Error("Failed to submit the data. Please try again.");
             }
 
-            // Handle response if necessary
-            const data = await response.json();
+            // Handle response from submission API
+            const submitData = await submitResponse.json();
             setFormSuccess(true);
-            setFormSuccessMessage(data.submission_text);
+            setFormSuccessMessage(submitData.submission_text);
 
-            console.log(data);
-            // Update state or perform other actions upon successful submission
+            console.log(submitData);
+
+            // After successful form submission, send an email
+            try {
+                const response = await fetch("/api/send-email", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        to: "muhammed.eid.muhammed@gmail.com",
+                        subject: "Test Subject",
+                        text: "Test Message",
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || "Failed to send email. Please try again.");
+                }
+
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.error("Error submitting form:", error);
+            }
         } catch (error) {
             console.error("Error submitting form:", error);
-            // Handle error state or display error message to the user
         }
     };
 

@@ -371,7 +371,6 @@ export default function Form({
                         </div>
                     </div>
                 </div>
-                {/* <ConfirmAndSign notesBox={true} /> */}
             </div>
             <div className="my-4 w-full">
                 {/* Reusable Input Group */}

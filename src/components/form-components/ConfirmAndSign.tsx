@@ -50,7 +50,7 @@ function ConfirmAndSign({
                     name="signature"
                     label="Kunde: (Unterschrift)"
                     value="" // You might want to manage this value as well
-                    readOnly={true}
+                    readOnly
                 />
             </div>
 

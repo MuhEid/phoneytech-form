@@ -20,7 +20,6 @@ export type FormData = {
     deviceUnlockCode: string;
     repairMaxPrice: number;
     deposit: number;
-    hasWaterDamage: boolean;
     totalPrice: number;
     notes: string;
     [key: string]: any;
@@ -40,7 +39,6 @@ const RepairForm: React.FC = () => {
         landline: "",
         color: "",
         simPin: "",
-        hasWaterDamage: false,
         repairs: {},
         deviceUnlockCode: "",
         repairMaxPrice: 0,
@@ -114,7 +112,7 @@ const RepairForm: React.FC = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        to: "muhammed.eid.muhammed@gmail.com",
+                        to: "shiban@phonytechs.de",
                         subject: "New Phone Repair Order",
                         formData: updatedFormData, // Pass the entire formData
                     }),

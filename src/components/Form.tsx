@@ -370,136 +370,42 @@ export default function Form({
                             )}
                         </div>
                     </div>
-
-                    <div className="my-4">
-                        {/* Reusable Input Group */}
-                        <div className="mb-2">
-                            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                                Reparieren Sie mein Gerät bis:
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type="number"
-                                    name="repairDate"
-                                    className="block w-full border rounded-md p-2 pr-10 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <FaEuroSign />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Deposit Field */}
-                        <div className="mb-2">
-                            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                                Anzahlung/Deposit:
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type="number"
-                                    name="deposit"
-                                    className="block w-full border rounded-md p-2 pr-10 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <FaEuroSign />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Total Price Field */}
-                        <div className="mb-2">
-                            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                                Gesamtpreis:
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type="number"
-                                    name="totalPrice"
-                                    className="block w-full border rounded-md p-2 pr-10 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <FaEuroSign />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 {/* <ConfirmAndSign notesBox={true} /> */}
             </div>
-            <div className="my-4">
-                {/* <div className="p-6">
-                    <div className="mb-4">
-                        <h2 className="text-lg font-semibold mb-2">Checkliste:</h2>
-                        <ul className="list-none">
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Touch Funktion
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Lautsprecher
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Mikrofon
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Hörmuschel
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Anruf Sensor
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Flasch Licht
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Netz
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> WL/WLAN
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Mobilfunk
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Buchse
-                            </li>
-                        </ul>
-                    </div>
+            <div className="my-4 w-full">
+                {/* Reusable Input Group */}
 
-                    <div>
-                        <h2 className="text-lg font-semibold mb-2">Repariert sein:</h2>
-                        <ul className="list-none">
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Diagnose
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Software
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Wasserschade
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Akku
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Displayschade
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Kamera
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Netz
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Buchse
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> Tasten
-                            </li>
-                            <li>
-                                <input type="checkbox" className="mr-2 checkbox" /> ID
-                            </li>
-                        </ul>
-                    </div>
-                </div> */}
+                <InputField
+                    label="Reparieren Sie mein Gerät bis:"
+                    type="number"
+                    name="repairMaxPrice"
+                    value={formData.repairMaxPrice}
+                    onChange={handleInput}
+                    euro
+                />
+
+                {/* Deposit Field */}
+                <InputField
+                    label="Anzahlung/Deposit:"
+                    type="number"
+                    name="deposit"
+                    value={formData.deposit}
+                    onChange={handleInput}
+                    euro
+                />
+
+                {/* Total Price Field */}
+                <InputField
+                    label="Gesamtpreis:"
+                    type="number"
+                    name="totalPrice"
+                    value={formData.totalPrice}
+                    onChange={handleInput}
+                    euro
+                />
+            </div>
+            <div className="my-4">
                 <div className="text-white flex w-1/2 items-center justify-around bg-main hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none">
                     <Link href="/terms" className="">
                         Allgemeine Geschäftsbedingungen lesen
@@ -507,7 +413,6 @@ export default function Form({
                     <FaAngleRight size={16} />
                 </div>
 
-                {/* <TermsAndConditions /> */}
                 <ConfirmAndSign
                     notesBox={false}
                     label="Hiermit bestätige ich, dass ich mit den oben genannten Bedingungen einverstanden bin und diese akzeptiere."

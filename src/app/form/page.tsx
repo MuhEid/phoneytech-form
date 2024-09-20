@@ -6,7 +6,6 @@ import React, { useState } from "react";
 export type FormData = {
     firstName: string;
     lastName: string;
-    company: string;
     phone: string;
     email: string;
     device: string;
@@ -17,10 +16,11 @@ export type FormData = {
     landline: string;
     color: string;
     simPin: string;
-    repairs: string[];
+    repairs: {};
     deviceUnlockCode: string;
-    repairDate: string;
+    repairMaxPrice: number;
     deposit: number;
+    hasWaterDamage: boolean;
     totalPrice: number;
     notes: string;
     [key: string]: any;
@@ -30,7 +30,6 @@ const RepairForm: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
         firstName: "",
         lastName: "",
-        company: "",
         phone: "",
         email: "",
         device: "",
@@ -41,9 +40,10 @@ const RepairForm: React.FC = () => {
         landline: "",
         color: "",
         simPin: "",
-        repairs: [],
+        hasWaterDamage: false,
+        repairs: {},
         deviceUnlockCode: "",
-        repairDate: "",
+        repairMaxPrice: 0,
         deposit: 0,
         totalPrice: 0,
         notes: "",

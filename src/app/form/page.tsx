@@ -115,8 +115,8 @@ const RepairForm: React.FC = () => {
                     },
                     body: JSON.stringify({
                         to: "muhammed.eid.muhammed@gmail.com",
-                        subject: "Test Subject",
-                        text: "Test Message",
+                        subject: "New Phone Repair Order",
+                        formData: updatedFormData, // Pass the entire formData
                     }),
                 });
 
@@ -127,11 +127,19 @@ const RepairForm: React.FC = () => {
 
                 const data = await response.json();
                 console.log(data);
-            } catch (error) {
-                console.error("Error submitting form:", error);
+            } catch (error: any) {
+                console.error("Error sending email:", error);
+                // Optionally, notify the user about the email failure
+                setFormSuccess(false);
+                setFormSuccessMessage(
+                    "Form submitted, but failed to send email. Please contact support."
+                );
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error submitting form:", error);
+            // Optionally, notify the user about the submission failure
+            setFormSuccess(false);
+            setFormSuccessMessage("Failed to submit the form. Please try again.");
         }
     };
 

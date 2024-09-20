@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DeviceMockup from "./form-components/DeviceMockup";
 import Logo from "./Logo";
-import TermsAndConditions from "./form-components/TermsAndConditions";
-import PatternLock from "./form-components/LockPattern";
 import Image from "next/image";
 import WaterDamageIcon from "../../public/images/waterDamageIcon.jpg";
 import DropdownMenu from "./form-components/DropdownMenu";

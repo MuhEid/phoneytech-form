@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
 
         // Define mail options
         const mailOptions = {
-            from: `"HandyTechs Support" <${process.env.EMAIL_ADDRESS}>`,
+            from: `"PhonyTechs Support" <${process.env.EMAIL_ADDRESS}>`,
             to: to,
             subject: subject,
             html: htmlToSend, // Use the HTML content

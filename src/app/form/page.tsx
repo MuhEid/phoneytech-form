@@ -13,7 +13,7 @@ export type FormData = {
     houseNumber: string;
     postCode: string;
     city: string;
-    landline: string;
+    serialNumber: string;
     color: string;
     simPin: string;
     repairs: {};
@@ -36,7 +36,7 @@ const RepairForm: React.FC = () => {
         houseNumber: "",
         postCode: "",
         city: "",
-        landline: "",
+        serialNumber: "",
         color: "",
         simPin: "",
         repairs: {},
@@ -84,11 +84,10 @@ const RepairForm: React.FC = () => {
 
         try {
             // Submit form data to the database API
-            const submitResponse = await fetch("/api/submit", {
+            const submitResponse = await fetch("http://localhost:5000/api/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Headers": "*",
                 },
                 body: JSON.stringify(updatedFormData),
             });
@@ -103,6 +102,11 @@ const RepairForm: React.FC = () => {
             setFormSuccessMessage(submitData.submission_text);
 
             console.log(submitData);
+
+            // Optionally, trigger PDF download
+            if (submitData.download_url) {
+                window.location.href = `http://localhost:5000${submitData.download_url}`;
+            }
 
             // After successful form submission, send an email
             try {
@@ -143,16 +147,16 @@ const RepairForm: React.FC = () => {
 
     return (
         <div className="container my-8 capitalize">
-            {formSuccess ? (
+            {/* {formSuccess ? (
                 <div>{formSuccessMessage}</div>
-            ) : (
-                <Form
-                    onSubmit={handleSubmitForm}
-                    handleInput={handleInput}
-                    formData={formData}
-                    handleNoneInputFields={handleNoneInputFields}
-                />
-            )}
+            ) : ( */}
+            <Form
+                onSubmit={handleSubmitForm}
+                handleInput={handleInput}
+                formData={formData}
+                handleNoneInputFields={handleNoneInputFields}
+            />
+            {/* )} */}
         </div>
     );
 };

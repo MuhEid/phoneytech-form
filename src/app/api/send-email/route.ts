@@ -19,7 +19,7 @@ interface EmailData {
         houseNumber: string;
         postCode: string;
         city: string;
-        landline: string;
+        serialNumber: string;
         color: string;
         simPin: string;
         repairs: string[];

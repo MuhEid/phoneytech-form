@@ -17,7 +17,7 @@ type FormProps = {
     handleNoneInputFields: (data: { name: string; value: any }) => void;
     formData: FormData;
 };
-const repairListOne = [
+const repairsWillBeMade = [
     "diagnose",
     "software",
     "wasserschaden",
@@ -29,7 +29,7 @@ const repairListOne = [
     "Rückseite/Rahmen",
     "flasch Licht",
 ];
-const repairListTwo = [
+const testBeforeRepair = [
     "touch funktion",
     "lautsprecher",
     "mikrofon",
@@ -50,6 +50,14 @@ const repairListTwo = [
     "kamera front",
 ];
 
+const deviceItemsBeforeRepair = [
+    "Übliche Gebrauchsspuren",
+    "Deutliche Gebrauchsspuren",
+    "Rahmen verbogen",
+    "SIM & SD Karte entfernt",
+    "Hülle Entfernt",
+];
+
 export default function Form({
     onSubmit,
     handleInput,
@@ -60,8 +68,8 @@ export default function Form({
     const [waterDamageSelected, setWaterDamageSelected] = useState<string | null>(null);
     const [deposit, setDeposit] = useState<number>(0);
     const [selectedRepairs, setSelectedRepairs] = useState({
-        repairListOne: [] as string[],
-        repairListTwo: [] as string[],
+        repairsWillBeMade: [] as string[],
+        testBeforeRepair: [] as string[],
     });
     const [selectedAccessories, setSelectedAccessories] = useState<
         { name: string; price: number }[]
@@ -184,8 +192,8 @@ export default function Form({
                         <InputField
                             label="IMEI/SN"
                             type="text"
-                            name="landline"
-                            value={formData.landline}
+                            name="serialNumber"
+                            value={formData.serialNumber}
                             onChange={handleInput}
                             placeholder="123456"
                         />
@@ -244,55 +252,33 @@ export default function Form({
                     {/* <PatternLock /> */}
                 </div>
                 <RepairsToBeMade
-                    repairOptions={repairListOne}
+                    repairOptions={repairsWillBeMade}
                     onRepairsChange={handleSelectedRepairs}
-                    fieldName="repairListOne"
+                    fieldName="repairsWillBeMade"
+                    header="Repariert wird:"
                 />
             </div>
             {/* third section */}
             <div className="mt-5">
-                <div className="my-4 flex flex-col md:flex-row">
-                    <div className="w-full md:w-1/3">
-                        <p className="font-semibold">Mängel am Gerät vor der Reparatur:</p>
-                        <div className="grid grid-cols-1  gap-4 mt-2">
-                            <label className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    name="üblicheGebrauchsspuren"
-                                    className="mr-2"
-                                />
-                                Übliche Gebrauchsspuren
-                            </label>
-                            <label className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    name="deutlicheGebrauchsspuren"
-                                    className="mr-2"
-                                />
-                                Deutliche Gebrauchsspuren
-                            </label>
-                            <label className="flex items-center">
-                                <input type="checkbox" name="rahmenVerbogen" className="mr-2" />
-                                Rahmen verbogen
-                            </label>
-                            <label className="flex items-center">
-                                <input type="checkbox" name="simEntfernt" className="mr-2" />
-                                SIM & SD Karte entfernt
-                            </label>
-                            <label className="flex items-center">
-                                <input type="checkbox" name="antenneEntfernt" className="mr-2" />
-                                Hülle Entfernt
-                            </label>
-                        </div>
+                <div className="my-4 w-full justify-between flex flex-col md:flex-row">
+                    <div>
+                        <RepairsToBeMade
+                            repairOptions={deviceItemsBeforeRepair}
+                            onRepairsChange={handleSelectedRepairs}
+                            fieldName="deviceItemsBeforeRepair"
+                            header="Mängel am Gerät vor der Reparatur:"
+                        />
+
+                        <DeviceMockup className="my-5 md:my-0" />
                     </div>
 
-                    <DeviceMockup className="my-5 md:my-0" />
+                    <RepairsToBeMade
+                        repairOptions={testBeforeRepair}
+                        onRepairsChange={handleSelectedRepairs}
+                        fieldName="testBeforeRepair"
+                        header=""
+                    />
                 </div>
-                <RepairsToBeMade
-                    repairOptions={repairListTwo}
-                    onRepairsChange={handleSelectedRepairs}
-                    fieldName="repairListTwo"
-                />
 
                 <div className="">
                     <div className="mt-4">

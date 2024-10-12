@@ -5,9 +5,15 @@ type RepairsToBeMadeProps = {
     repairOptions: string[]; // Generic list of options passed as a prop
     onRepairsChange: (selectedItems: string[], fieldName: string) => void; // Add fieldName to track multiple usages
     fieldName: string; // Add fieldName to identify this group of checkboxes
+    header: string;
 };
 
-function RepairsToBeMade({ repairOptions, onRepairsChange, fieldName }: RepairsToBeMadeProps) {
+function RepairsToBeMade({
+    repairOptions,
+    onRepairsChange,
+    fieldName,
+    header,
+}: RepairsToBeMadeProps) {
     const [checkedRepairs, setCheckedRepairs] = useState<string[]>([]);
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +30,7 @@ function RepairsToBeMade({ repairOptions, onRepairsChange, fieldName }: RepairsT
 
     return (
         <div className="mt-7">
-            <p className="text-xl mb-2 font-semibold">Repariert wird:</p>
+            <p className="text-xl mb-2 font-semibold">{header}</p>
             <div className="grid grid-cols-2 gap-4 mt-2 capitalize">
                 {repairOptions.map((repair) => (
                     <CheckboxField

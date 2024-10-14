@@ -17,6 +17,7 @@ export type FormData = {
     color: string;
     simPin: string;
     repairs: {};
+    totalAccessoryPrice: number;
     deviceUnlockCode: string;
     repairMaxPrice: number;
     deposit: number;
@@ -39,6 +40,7 @@ const RepairForm: React.FC = () => {
         serialNumber: "",
         color: "",
         simPin: "",
+        totalAccessoryPrice: 0,
         repairs: {},
         deviceUnlockCode: "",
         repairMaxPrice: 0,

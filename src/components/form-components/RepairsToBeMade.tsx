@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckboxField from "./CheckboxField";
 
 type RepairsToBeMadeProps = {
@@ -18,15 +18,17 @@ function RepairsToBeMade({
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = event.target;
-        setCheckedRepairs((prevCheckedRepairs) => {
-            const updatedRepairs = checked
-                ? [...prevCheckedRepairs, value]
-                : prevCheckedRepairs.filter((repair) => repair !== value);
 
-            onRepairsChange(updatedRepairs, fieldName); // Pass the updated list and the fieldName
-            return updatedRepairs;
-        });
+        setCheckedRepairs((prevCheckedRepairs) =>
+            checked
+                ? [...prevCheckedRepairs, value]
+                : prevCheckedRepairs.filter((repair) => repair !== value)
+        );
     };
+
+    useEffect(() => {
+        onRepairsChange(checkedRepairs, fieldName);
+    }, [checkedRepairs, fieldName, onRepairsChange]);
 
     return (
         <div className="mt-7">

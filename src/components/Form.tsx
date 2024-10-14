@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import DeviceMockup from "./form-components/DeviceMockup";
 import Logo from "./Logo";
 import Image from "next/image";
@@ -84,12 +84,14 @@ export default function Form({
     const handleSelectedAccessories = (newSelectedItems: { name: string; price: number }[]) => {
         setSelectedAccessories(newSelectedItems);
     };
-    const handleSelectedRepairs = (newSelectedRepairs: string[], fieldName: string) => {
+    // Wrap 'handleSelectedRepairs' with 'useCallback'
+    const handleSelectedRepairs = useCallback((selectedItems: string[], fieldName: string) => {
         setSelectedRepairs((prev) => ({
             ...prev,
-            [fieldName]: newSelectedRepairs,
+            [fieldName]: selectedItems,
         }));
-    };
+    }, []);
+
     const handleAgreeWithTerms = (newAgreeWithTerms: boolean) => {
         setAgreeWithTerms(newAgreeWithTerms);
     };
@@ -99,6 +101,9 @@ export default function Form({
             selectedAccessories.reduce((acc, item) => acc + item.price, 0).toFixed(2)
         );
     };
+    const totalAccessoryPrice = calculateTotalAccessoryPrice();
+    // const totalPrice = totalAccessoryPrice; /* + other form inputs' prices */
+    // const remainingAmount = totalPrice - deposit;
 
     useEffect(() => {
         handleNoneInputFields({ name: "repairs", value: selectedRepairs });
@@ -115,10 +120,9 @@ export default function Form({
     useEffect(() => {
         handleNoneInputFields({ name: "agreeWithTerms", value: agreeWithTerms });
     }, [agreeWithTerms, handleNoneInputFields]);
-
-    const totalAccessoryPrice = calculateTotalAccessoryPrice();
-    const totalPrice = totalAccessoryPrice; /* + other form inputs' prices */
-    const remainingAmount = totalPrice - deposit;
+    useEffect(() => {
+        handleNoneInputFields({ name: "totalAccessoryPrice", value: totalAccessoryPrice });
+    }, [totalAccessoryPrice, handleNoneInputFields]);
 
     return (
         <form onSubmit={onSubmit} className="flex flex-col">
@@ -287,7 +291,7 @@ export default function Form({
                             <div className="flex items-center justify-end text-gray-900">
                                 <span className="text-lg font-semibold">Total:</span>
                                 <span className="flex justify-center items-center text-xl ml-2">
-                                    {totalPrice} <FaEuroSign />
+                                    {totalAccessoryPrice} <FaEuroSign />
                                 </span>
                             </div>
                         </div>

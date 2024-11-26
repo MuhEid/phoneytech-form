@@ -84,9 +84,11 @@ const RepairForm: React.FC = () => {
         const newOrderId = generateOrderId();
         const updatedFormData = { ...formData, orderId: newOrderId };
 
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
         try {
             // Submit form data to the database API
-            const submitResponse = await fetch("http://localhost:5000/api/submit", {
+            const submitResponse = await fetch(`${apiUrl}/api/submit`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

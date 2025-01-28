@@ -109,7 +109,7 @@ const RepairForm: React.FC = () => {
 
             // Optionally, trigger PDF download
             if (submitData.download_url) {
-                window.location.href = `http://localhost:5000${submitData.download_url}`;
+                window.location.href = `${apiUrl}${submitData.download_url}`;
             }
 
             // After successful form submission, send an email

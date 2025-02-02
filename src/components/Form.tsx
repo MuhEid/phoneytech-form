@@ -10,6 +10,7 @@ import ConfirmAndSign from "./form-components/ConfirmAndSign";
 import { FaAngleRight, FaEuroSign } from "react-icons/fa";
 import { FormData } from "@/app/form/page";
 import Link from "next/link";
+import PatternLock from "./form-components/LockPattern";
 
 type FormProps = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -229,7 +230,7 @@ export default function Form({
                     </div>
                 </div>
                 <div className="flex items-center justify-between space-x-4">
-                    <div className="grid w-full">
+                    <div className="grid w-5/6">
                         <InputField
                             label="Farbe"
                             type="text"
@@ -253,7 +254,7 @@ export default function Form({
                             onChange={handleInput}
                         />
                     </div>
-                    {/* <PatternLock /> */}
+                    <PatternLock />
                 </div>
                 <RepairsToBeMade
                     repairOptions={repairsWillBeMade}

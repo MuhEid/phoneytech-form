@@ -19,9 +19,9 @@ export type FormData = {
     repairs: {};
     totalAccessoryPrice: number;
     deviceUnlockCode: string;
-    repairMaxPrice: number;
-    deposit: number;
-    totalPrice: number;
+    repairMaxPrice: number | null;
+    deposit: number | null;
+    totalPrice: number | null;
     notes: string;
     [key: string]: any;
 };
@@ -43,9 +43,9 @@ const RepairForm: React.FC = () => {
         totalAccessoryPrice: 0,
         repairs: {},
         deviceUnlockCode: "",
-        repairMaxPrice: 0,
-        deposit: 0,
-        totalPrice: 0,
+        repairMaxPrice: null,
+        deposit: null,
+        totalPrice: null,
         notes: "",
         orderId: "",
     });

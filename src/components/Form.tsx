@@ -370,7 +370,7 @@ export default function Form({
                     label="Reparieren Sie mein Gerät bis:"
                     type="number"
                     name="repairMaxPrice"
-                    value={formData.repairMaxPrice}
+                    value={formData.repairMaxPrice ?? ""}
                     onChange={handleInput}
                     euro
                 />
@@ -380,7 +380,7 @@ export default function Form({
                     label="Anzahlung/Deposit:"
                     type="number"
                     name="deposit"
-                    value={formData.deposit}
+                    value={formData.deposit ?? ""}
                     onChange={handleInput}
                     euro
                 />
@@ -390,14 +390,14 @@ export default function Form({
                     label="Gesamtpreis:"
                     type="number"
                     name="totalPrice"
-                    value={formData.totalPrice}
+                    value={formData.totalPrice ?? ""}
                     onChange={handleInput}
                     euro
                 />
             </div>
             <div className="my-4">
                 <div className="text-white flex w-1/2 items-center justify-around bg-main hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none">
-                    <Link href="/terms" className="">
+                    <Link href="/terms" target="_blank" className="">
                         Allgemeine Geschäftsbedingungen lesen
                     </Link>
                     <FaAngleRight size={16} />

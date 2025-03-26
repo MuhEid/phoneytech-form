@@ -63,7 +63,7 @@ const RepairForm: React.FC = () => {
     };
 
     const handleNoneInputFields = (data: { name: keyof FormData; value: any }) => {
-        if (typeof data === "object" && data.name && data.value) {
+        if (typeof data === "object" && data.name) {
             setFormData((prevState) => {
                 // Check if the value has actually changed before updating the state
                 if (prevState[data.name] !== data.value) {

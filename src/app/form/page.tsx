@@ -88,7 +88,7 @@ const RepairForm: React.FC = () => {
 
         try {
             // Submit form data to the database API
-            const submitResponse = await fetch(`${apiUrl}/api/submit`, {
+            const submitResponse = await fetch(`${apiUrl}/submit`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

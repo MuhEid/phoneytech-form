@@ -114,7 +114,7 @@ const RepairForm: React.FC = () => {
 
             // After successful form submission, send an email
             try {
-                const response = await fetch("/api/send-email", {
+                const response = await fetch(`${apiUrl}/send-email`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -122,7 +122,8 @@ const RepairForm: React.FC = () => {
                     body: JSON.stringify({
                         to: "shiban@phonytechs.de",
                         subject: "New Phone Repair Order",
-                        formData: updatedFormData, // Pass the entire formData
+                        formData: updatedFormData,
+                        filename: submitData.filename,
                     }),
                 });
 

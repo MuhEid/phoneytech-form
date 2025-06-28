@@ -105,8 +105,6 @@ const RepairForm: React.FC = () => {
             setFormSuccess(true);
             setFormSuccessMessage(submitData.submission_text);
 
-            console.log(submitData);
-
             // Optionally, trigger PDF download
             if (submitData.download_url) {
                 window.location.href = `${apiUrl}${submitData.download_url}`;
@@ -120,8 +118,8 @@ const RepairForm: React.FC = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        to: "shiban@phonytechs.de",
-                        subject: "New Phone Repair Order",
+                        to: "order-ulm@phonytechs.de",
+                        subject: `${updatedFormData.lastName} - ${updatedFormData.orderId} Repair Order`,
                         formData: updatedFormData,
                         filename: submitData.filename,
                     }),
@@ -133,10 +131,8 @@ const RepairForm: React.FC = () => {
                 }
 
                 const data = await response.json();
-                console.log(data);
             } catch (error: any) {
                 console.error("Error sending email:", error);
-                // Optionally, notify the user about the email failure
                 setFormSuccess(false);
                 setFormSuccessMessage(
                     "Form submitted, but failed to send email. Please contact support."
@@ -152,16 +148,12 @@ const RepairForm: React.FC = () => {
 
     return (
         <div className="container my-8 capitalize">
-            {/* {formSuccess ? (
-                <div>{formSuccessMessage}</div>
-            ) : ( */}
             <Form
                 onSubmit={handleSubmitForm}
                 handleInput={handleInput}
                 formData={formData}
                 handleNoneInputFields={handleNoneInputFields}
             />
-            {/* )} */}
         </div>
     );
 };

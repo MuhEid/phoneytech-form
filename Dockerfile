@@ -1,23 +1,25 @@
-# Use an official Node.js runtime as a parent image
+# 1. Use Node.js base image
 FROM node:18-alpine
 
-# Set the working directory
+# 2. Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# 3. Copy package files and install deps
 COPY package*.json ./
+RUN npm install
 
-# Install dependencies
-RUN npm install --production
-
-# Copy the rest of the application code
+# 4. Copy the rest of the app
 COPY . .
 
-# Build the Next.js app
+# 5. Build the Next.js app
 RUN npm run build
 
-# Expose the port the app runs on
+# 6. Install PM2 globally
+RUN npm install -g pm2
+
+# 7. Expose the default Next.js port
 EXPOSE 3000
 
-# Start the app
-CMD ["npm", "start"]
+# 8. Start using pm2-runtime
+CMD ["pm2-runtime", "start", "npm", "--name", "hashemform", "--", "start"]
+

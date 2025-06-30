@@ -118,7 +118,7 @@ const RepairForm: React.FC = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        to: "order-ulm@phonytechs.de",
+                        to: process.env.NEXT_PUBLIC_EMAIL_RECEIVER,
                         subject: `${updatedFormData.lastName} - ${updatedFormData.orderId} Repair Order`,
                         formData: updatedFormData,
                         filename: submitData.filename,

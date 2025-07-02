@@ -1,25 +1,32 @@
-# 1. Use Node.js base image
 FROM node:18-alpine
 
-# 2. Set the working directory
+# Accept build-time arg
+ARG NEXT_PUBLIC_EMAIL_RECEIVER
+ENV NEXT_PUBLIC_EMAIL_RECEIVER=$NEXT_PUBLIC_EMAIL_RECEIVER
+
 WORKDIR /app
 
-# 3. Copy package files and install deps
+# Install deps
 COPY package*.json ./
 RUN npm install
 
-# 4. Copy the rest of the app
+# Copy all code
 COPY . .
 
-# 5. Build the Next.js app
+# Inject env
+RUN printf "\nNEXT_PUBLIC_EMAIL_RECEIVER=%s\n" "$NEXT_PUBLIC_EMAIL_RECEIVER" >> .env.local
+
+# Build the app
 RUN npm run build
 
-# 6. Install PM2 globally
+# Move static files to standalone dir
+RUN cp -r .next/static .next/standalone/.next/static
+
+# Install PM2
 RUN npm install -g pm2
 
-# 7. Expose the default Next.js port
+# Expose Next.js port
 EXPOSE 3000
 
-# 8. Start using pm2-runtime
-CMD ["pm2-runtime", "start", "npm", "--name", "hashemform", "--", "start"]
-
+# Run using the built server
+CMD ["pm2-runtime", "start", "node", "--name", "hashemform", "--", ".next/standalone/server.js"]

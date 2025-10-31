@@ -8,3 +8,29 @@ export const generateOrderId = () => {
     return `A${stringYear}-${uniquePart}`;
 };
 
+/**
+ * Calculate total price from accessories
+ */
+export const calculateAccessoryTotal = (accessories: { name: string; price: number }[]): number => {
+    return parseFloat(accessories.reduce((acc, item) => acc + item.price, 0).toFixed(2));
+};
+
+/**
+ * Calculate total price from accessories and manual inputs
+ */
+export const calculateTotalPrice = (
+    accessories: { name: string; price: number }[],
+    accessoryTotal: number,
+    repairMaxPrice: number | null,
+    deposit: number | null,
+    manualTotalPrice: number | null
+): number => {
+    // If manualTotalPrice is provided, use it (user override)
+    if (manualTotalPrice !== null && manualTotalPrice > 0) {
+        return manualTotalPrice;
+    }
+
+    // Otherwise, compute from accessories + deposit
+    // For now, totalPrice = totalAccessoryPrice (can be extended with repairMaxPrice logic later)
+    return accessoryTotal;
+};

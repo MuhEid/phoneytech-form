@@ -1,30 +1,8 @@
 "use client";
 import Form from "@/components/Form";
-import { generateOrderId } from "@/server/utils";
+import { generateOrderId } from "@/utils";
+import { FormData } from "@/types";
 import React, { useState } from "react";
-
-export type FormData = {
-    firstName: string;
-    lastName: string;
-    phone: string;
-    email: string;
-    device: string;
-    street: string;
-    houseNumber: string;
-    postCode: string;
-    city: string;
-    serialNumber: string;
-    color: string;
-    simPin: string;
-    repairs: {};
-    totalAccessoryPrice: number;
-    deviceUnlockCode: string;
-    repairMaxPrice: number | null;
-    deposit: number | null;
-    totalPrice: number | null;
-    notes: string;
-    [key: string]: any;
-};
 
 const RepairForm: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
@@ -108,35 +86,6 @@ const RepairForm: React.FC = () => {
             // Optionally, trigger PDF download
             if (submitData.download_url) {
                 window.location.href = `${apiUrl}${submitData.download_url}`;
-            }
-
-            // After successful form submission, send an email
-            try {
-                const response = await fetch(`${apiUrl}/send-email`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        to: process.env.NEXT_PUBLIC_EMAIL_RECEIVER,
-                        subject: `${updatedFormData.lastName} - ${updatedFormData.orderId} Repair Order`,
-                        formData: updatedFormData,
-                        filename: submitData.filename,
-                    }),
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || "Failed to send email. Please try again.");
-                }
-
-                const data = await response.json();
-            } catch (error: any) {
-                console.error("Error sending email:", error);
-                setFormSuccess(false);
-                setFormSuccessMessage(
-                    "Form submitted, but failed to send email. Please contact support."
-                );
             }
         } catch (error: any) {
             console.error("Error submitting form:", error);

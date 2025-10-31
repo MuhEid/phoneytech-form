@@ -8,7 +8,7 @@ import InputField from "./form-components/InputField";
 import RepairsToBeMade from "./form-components/RepairsToBeMade";
 import ConfirmAndSign from "./form-components/ConfirmAndSign";
 import { FaAngleRight, FaEuroSign } from "react-icons/fa";
-import { FormData } from "@/app/form/page";
+import { FormData } from "@/types";
 import Link from "next/link";
 import PatternLock from "./form-components/LockPattern";
 

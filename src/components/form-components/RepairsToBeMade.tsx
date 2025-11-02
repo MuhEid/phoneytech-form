@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import CheckboxField from "./CheckboxField";
 
 type RepairsToBeMadeProps = {
-    repairOptions: string[]; // Generic list of options passed as a prop
-    onRepairsChange: (selectedItems: string[], fieldName: string) => void; // Add fieldName to track multiple usages
-    fieldName: string; // Add fieldName to identify this group of checkboxes
+    repairOptions: string[];
+    onRepairsChange: (selectedItems: string[], fieldName: string) => void;
+    fieldName: string;
     header: string;
+    value?: string[]; // controlled selected values
+    defaultValue?: string[]; // uncontrolled initial selection
 };
 
 function RepairsToBeMade({
@@ -13,22 +15,32 @@ function RepairsToBeMade({
     onRepairsChange,
     fieldName,
     header,
+    value,
+    defaultValue = [],
 }: RepairsToBeMadeProps) {
-    const [checkedRepairs, setCheckedRepairs] = useState<string[]>([]);
+    const [checkedRepairs, setCheckedRepairs] = useState<string[]>(defaultValue);
+
+    const isControlled = Array.isArray(value);
+    const selected = isControlled ? (value as string[]) : checkedRepairs;
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value, checked } = event.target;
+        const { value: v, checked } = event.target;
 
-        setCheckedRepairs((prevCheckedRepairs) =>
-            checked
-                ? [...prevCheckedRepairs, value]
-                : prevCheckedRepairs.filter((repair) => repair !== value)
-        );
+        const base = selected;
+        const next = checked ? [...base, v] : base.filter((r) => r !== v);
+
+        if (!isControlled) {
+            setCheckedRepairs(next);
+        }
+        onRepairsChange(next, fieldName);
     };
 
     useEffect(() => {
-        onRepairsChange(checkedRepairs, fieldName);
-    }, [checkedRepairs, fieldName, onRepairsChange]);
+        if (!isControlled) {
+            onRepairsChange(checkedRepairs, fieldName);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [checkedRepairs]);
 
     return (
         <div className="mt-7">
@@ -40,7 +52,7 @@ function RepairsToBeMade({
                         label={repair}
                         name={repair}
                         value={repair}
-                        checked={checkedRepairs.includes(repair)}
+                        checked={selected.includes(repair)}
                         onChange={handleCheckboxChange}
                     />
                 ))}

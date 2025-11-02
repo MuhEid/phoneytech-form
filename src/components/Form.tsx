@@ -107,15 +107,6 @@ export default function Form({
         setAgreeWithTerms(newAgreeWithTerms);
     };
 
-    const calculateTotalAccessoryPrice = () => {
-        return parseFloat(
-            selectedAccessories.reduce((acc, item) => acc + item.price, 0).toFixed(2)
-        );
-    };
-    const totalAccessoryPrice = calculateTotalAccessoryPrice();
-    // const totalPrice = totalAccessoryPrice; /* + other form inputs' prices */
-    // const remainingAmount = totalPrice - deposit;
-
     useEffect(() => {
         handleNoneInputFields({ name: "repairs", value: selectedRepairs });
     }, [selectedRepairs, handleNoneInputFields]);
@@ -131,9 +122,6 @@ export default function Form({
     useEffect(() => {
         handleNoneInputFields({ name: "agreeWithTerms", value: agreeWithTerms });
     }, [agreeWithTerms, handleNoneInputFields]);
-    useEffect(() => {
-        handleNoneInputFields({ name: "totalAccessoryPrice", value: totalAccessoryPrice });
-    }, [totalAccessoryPrice, handleNoneInputFields]);
 
     return (
         <form onSubmit={onSubmit} className="flex flex-col">
@@ -271,6 +259,7 @@ export default function Form({
                     onRepairsChange={handleSelectedRepairs}
                     fieldName="repairsWillBeMade"
                     header="Repariert wird:"
+                    value={selectedRepairs.repairsWillBeMade}
                 />
             </div>
             {/* third section */}
@@ -282,6 +271,7 @@ export default function Form({
                             onRepairsChange={handleSelectedRepairs}
                             fieldName="deviceItemsBeforeRepair"
                             header="Mängel am Gerät vor der Reparatur:"
+                            value={selectedRepairs.deviceItemsBeforeRepair || []}
                         />
 
                         <DeviceMockup className="my-5 md:my-0" />
@@ -292,17 +282,21 @@ export default function Form({
                         onRepairsChange={handleSelectedRepairs}
                         fieldName="testBeforeRepair"
                         header=""
+                        value={selectedRepairs.testBeforeRepair}
                     />
                 </div>
 
                 <div className="">
                     <div className="mt-4">
                         <div>
-                            <DropdownMenu onSelectionChange={handleSelectedAccessories} />
+                            <DropdownMenu
+                                selectedItems={selectedAccessories}
+                                onSelectionChange={handleSelectedAccessories}
+                            />
                             <div className="flex items-center justify-end text-gray-900">
                                 <span className="text-lg font-semibold">Total:</span>
                                 <span className="flex justify-center items-center text-xl ml-2">
-                                    {totalAccessoryPrice} <FaEuroSign />
+                                    {formData.totalAccessoryPrice} <FaEuroSign />
                                 </span>
                             </div>
                         </div>

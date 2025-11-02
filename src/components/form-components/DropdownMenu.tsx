@@ -12,11 +12,11 @@ const accessoryItems: string[] = [
 ];
 
 interface DropdownMenuProps {
+    selectedItems: { name: string; price: number }[];
     onSelectionChange: (selectedItems: { name: string; price: number }[]) => void;
 }
 
-const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
-    const [selectedItems, setSelectedItems] = useState<{ name: string; price: number }[]>([]);
+const DropdownMenu = ({ selectedItems, onSelectionChange }: DropdownMenuProps) => {
     const [currentPrice, setCurrentPrice] = useState<number | null>(null);
     const [selectedAccessory, setSelectedAccessory] = useState<string | null>(null);
 
@@ -27,10 +27,9 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
     };
 
     const handleAddItem = () => {
-        if (selectedAccessory && currentPrice !== null) {
+        if (selectedAccessory && currentPrice !== null && isFinite(currentPrice)) {
             const newItem = { name: selectedAccessory, price: currentPrice };
             const newSelectedItems = [...selectedItems, newItem];
-            setSelectedItems(newSelectedItems);
             onSelectionChange(newSelectedItems);
             // Reset input fields
             setSelectedAccessory(null);
@@ -40,7 +39,6 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
 
     const handleRemove = (item: { name: string; price: number }) => {
         const newSelectedItems = selectedItems.filter((ele) => ele.name !== item.name);
-        setSelectedItems(newSelectedItems);
         onSelectionChange(newSelectedItems);
     };
 
@@ -62,9 +60,15 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
                         tabIndex={0}
                         className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
                     >
-                        {accessoryItems.map((ele, index) => (
-                            <li key={index} onClick={() => handleSelect(ele)}>
-                                <a>{ele}</a>
+                        {accessoryItems.map((ele) => (
+                            <li key={ele}>
+                                <button
+                                    type="button"
+                                    className="text-left w-full"
+                                    onClick={() => handleSelect(ele)}
+                                >
+                                    {ele}
+                                </button>
                             </li>
                         ))}
                     </ul>
@@ -78,8 +82,19 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
                             type="number"
                             className="input  w-full max-w-xs mt-2"
                             placeholder="Enter price"
-                            value={currentPrice || ""}
-                            onChange={(e) => setCurrentPrice(parseFloat(e.target.value))}
+                            value={currentPrice ?? ""}
+                            onChange={(e) => {
+                                const v = e.target.value;
+                                if (v === "") {
+                                    setCurrentPrice(null);
+                                } else {
+                                    const num = Number.parseFloat(v);
+                                    setCurrentPrice(Number.isFinite(num) ? num : null);
+                                }
+                            }}
+                            min={0}
+                            step={0.01}
+                            inputMode="decimal"
                         />
                         <button className="btn btn-main mt-2 ml-2" onClick={handleAddItem}>
                             Add {selectedAccessory}
@@ -88,8 +103,8 @@ const DropdownMenu = ({ onSelectionChange }: DropdownMenuProps) => {
                 )}
 
                 <div className="mt-4">
-                    {selectedItems.map((item, index) => (
-                        <div key={index} className="flex items-center justify-around">
+                    {selectedItems.map((item) => (
+                        <div key={item.name} className="flex items-center justify-around">
                             <div className="flex items-center text-gray-900 bg-white border border-gray-300 rounded-md px-5 py-1 my-1 w-1/2">
                                 <h4>{item.name}</h4>
                                 <span className="flex-1 ml-2">{item.price}</span>

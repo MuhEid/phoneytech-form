@@ -1,8 +1,8 @@
 "use client";
 import Form from "@/components/Form";
-import { generateOrderId } from "@/utils";
+import { generateOrderId, calculateAccessoryTotal, calculateTotalPrice } from "@/utils";
 import { FormData } from "@/types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const RepairForm: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
@@ -54,6 +54,41 @@ const RepairForm: React.FC = () => {
             });
         }
     };
+
+    // Compute prices whenever accessories, repairMaxPrice, or deposit changes
+    useEffect(() => {
+        const accessories = (formData.accessories as { name: string; price: number }[]) || [];
+        const accessoryTotal = calculateAccessoryTotal(accessories);
+
+        // For deposit and repairMaxPrice, convert from form input (could be string) to number
+        const depositValue = typeof formData.deposit === 'string'
+            ? parseFloat(formData.deposit) || 0
+            : formData.deposit || 0;
+        const repairMaxValue = typeof formData.repairMaxPrice === 'string'
+            ? parseFloat(formData.repairMaxPrice) || null
+            : formData.repairMaxPrice;
+        const manualTotalValue = typeof formData.totalPrice === 'string'
+            ? parseFloat(formData.totalPrice) || null
+            : formData.totalPrice;
+
+        const calculatedTotalPrice = calculateTotalPrice(
+            accessories,
+            accessoryTotal,
+            repairMaxValue,
+            depositValue,
+            manualTotalValue
+        );
+
+        // Update totalAccessoryPrice and totalPrice only if no manual override
+        setFormData((prevState) => ({
+            ...prevState,
+            totalAccessoryPrice: accessoryTotal,
+            totalPrice: manualTotalValue !== null && manualTotalValue > 0
+                ? manualTotalValue
+                : calculatedTotalPrice,
+        }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData.accessories, formData.deposit, formData.repairMaxPrice]);
 
     const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

@@ -81,6 +81,7 @@ export default function Form({
     const [selectedRepairs, setSelectedRepairs] = useState({
         repairsWillBeMade: [] as string[],
         testBeforeRepair: [] as string[],
+        deviceItemsBeforeRepair: [] as string[],
     });
     const [selectedAccessories, setSelectedAccessories] = useState<
         { name: string; price: number }[]

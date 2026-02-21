@@ -24,7 +24,7 @@ const InputField: React.FC<InputFieldProps> = ({
     required = false,
     euro = false,
 }) => (
-    <div className="md:w-1/2, sm:w-full">
+    <div className="md:w-1/2 sm:w-full">
         <label htmlFor={name} className="block mb-2 text-sm font-medium text-gray-900">
             {label}
         </label>

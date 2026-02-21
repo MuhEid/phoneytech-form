@@ -1,32 +1,30 @@
-FROM node:18-alpine
+FROM node:20-alpine AS base
+WORKDIR /app
+RUN apk add --no-cache libc6-compat
 
-# Accept build-time arg
+FROM base AS deps
+COPY package.json package-lock.json ./
+RUN npm ci
+
+FROM base AS builder
 ARG NEXT_PUBLIC_EMAIL_RECEIVER
 ENV NEXT_PUBLIC_EMAIL_RECEIVER=$NEXT_PUBLIC_EMAIL_RECEIVER
-
-WORKDIR /app
-
-# Install deps
-COPY package*.json ./
-RUN npm install
-
-# Copy all code
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Inject env
-RUN printf "\nNEXT_PUBLIC_EMAIL_RECEIVER=%s\n" "$NEXT_PUBLIC_EMAIL_RECEIVER" >> .env.local
-
-# Build the app
 RUN npm run build
 
-# Move static files to standalone dir
-RUN cp -r .next/static .next/standalone/.next/static
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
 
-# Install PM2
-RUN npm install -g pm2
+RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 
-# Expose Next.js port
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+USER nextjs
 EXPOSE 3000
-
-# Run using the built server
-CMD ["pm2-runtime", "start", "node", "--name", "hashemform", "--", ".next/standalone/server.js"]
+CMD ["node", "server.js"]

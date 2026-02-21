@@ -1,3 +1,14 @@
+export type AccessoryItem = {
+    name: string;
+    price: number;
+};
+
+export type RepairsSelection = {
+    repairsWillBeMade: string[];
+    testBeforeRepair: string[];
+    deviceItemsBeforeRepair: string[];
+};
+
 export type FormData = {
     firstName: string;
     lastName: string;
@@ -11,13 +22,18 @@ export type FormData = {
     serialNumber: string;
     color: string;
     simPin: string;
-    repairs: {};
+    repairs: RepairsSelection;
+    accessories: AccessoryItem[];
+    waterDamage: boolean;
+    waterDamageAcknowledged: boolean;
+    agreeWithTerms: boolean;
     totalAccessoryPrice: number;
     deviceUnlockCode: string;
     repairMaxPrice: number | null;
     deposit: number | null;
     totalPrice: number | null;
     notes: string;
-    [key: string]: any;
+    signature: string;
+    orderId: string;
 };
 

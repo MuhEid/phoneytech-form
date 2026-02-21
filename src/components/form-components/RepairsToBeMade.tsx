@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
 import CheckboxField from "./CheckboxField";
+import { RepairsSelection } from "@/types";
 
 type RepairsToBeMadeProps = {
     repairOptions: string[];
-    onRepairsChange: (selectedItems: string[], fieldName: string) => void;
-    fieldName: string;
+    onRepairsChange: (selectedItems: string[], fieldName: keyof RepairsSelection) => void;
+    fieldName: keyof RepairsSelection;
     header: string;
-    value?: string[]; // controlled selected values
-    defaultValue?: string[]; // uncontrolled initial selection
+    value: string[];
 };
 
 function RepairsToBeMade({
@@ -16,31 +15,14 @@ function RepairsToBeMade({
     fieldName,
     header,
     value,
-    defaultValue = [],
 }: RepairsToBeMadeProps) {
-    const [checkedRepairs, setCheckedRepairs] = useState<string[]>(defaultValue);
-
-    const isControlled = Array.isArray(value);
-    const selected = isControlled ? (value as string[]) : checkedRepairs;
-
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value: v, checked } = event.target;
 
-        const base = selected;
+        const base = value;
         const next = checked ? [...base, v] : base.filter((r) => r !== v);
-
-        if (!isControlled) {
-            setCheckedRepairs(next);
-        }
         onRepairsChange(next, fieldName);
     };
-
-    useEffect(() => {
-        if (!isControlled) {
-            onRepairsChange(checkedRepairs, fieldName);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [checkedRepairs]);
 
     return (
         <div className="mt-7">
@@ -52,7 +34,7 @@ function RepairsToBeMade({
                         label={repair}
                         name={repair}
                         value={repair}
-                        checked={selected.includes(repair)}
+                        checked={value.includes(repair)}
                         onChange={handleCheckboxChange}
                     />
                 ))}

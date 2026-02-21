@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+﻿import React from "react";
 import DeviceMockup from "./form-components/DeviceMockup";
 import Logo from "./Logo";
 import Image from "next/image";
@@ -8,16 +8,22 @@ import InputField from "./form-components/InputField";
 import RepairsToBeMade from "./form-components/RepairsToBeMade";
 import ConfirmAndSign from "./form-components/ConfirmAndSign";
 import { FaAngleRight, FaEuroSign } from "react-icons/fa";
-import { FormData } from "@/types";
+import { AccessoryItem, FormData, RepairsSelection } from "@/types";
 import Link from "next/link";
 import PatternLock from "./form-components/LockPattern";
 
 type FormProps = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-    handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleNoneInputFields: (data: { name: string; value: any }) => void;
+    handleInput: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     formData: FormData;
+    onRepairsChange: (selectedItems: string[], fieldName: keyof RepairsSelection) => void;
+    onAccessoriesChange: (selectedItems: AccessoryItem[]) => void;
+    onWaterDamageChange: (hasWaterDamage: boolean) => void;
+    onWaterDamageAcknowledgedChange: (acknowledged: boolean) => void;
+    onAgreeWithTermsChange: (agreeWithTerms: boolean) => void;
+    isSubmitting: boolean;
 };
+
 const repairsWillBeMade = [
     "Diagnose",
     "Software",
@@ -40,6 +46,7 @@ const repairsWillBeMade = [
     "Haupt kamera",
     "Front kamera",
 ];
+
 const testBeforeRepair = [
     "Touchfunktion",
     "Lautsprecher",
@@ -73,56 +80,21 @@ export default function Form({
     onSubmit,
     handleInput,
     formData,
-    handleNoneInputFields,
+    onRepairsChange,
+    onAccessoriesChange,
+    onWaterDamageChange,
+    onWaterDamageAcknowledgedChange,
+    onAgreeWithTermsChange,
+    isSubmitting,
 }: FormProps) {
-    const [hasWaterDamage, setHasWaterDamage] = useState<boolean>(false);
-    const [waterDamageSelected, setWaterDamageSelected] = useState<string | null>(null);
-    const [deposit, setDeposit] = useState<number>(0);
-    const [selectedRepairs, setSelectedRepairs] = useState({
-        repairsWillBeMade: [] as string[],
-        testBeforeRepair: [] as string[],
-        deviceItemsBeforeRepair: [] as string[],
-    });
-    const [selectedAccessories, setSelectedAccessories] = useState<
-        { name: string; price: number }[]
-    >([]);
-    const [agreeWithTerms, setAgreeWithTerms] = useState<boolean>(false);
-
     const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const value = e.target.value;
-        setWaterDamageSelected(value);
-        setHasWaterDamage(value === "yes");
-    };
-    const handleSelectedAccessories = (newSelectedItems: { name: string; price: number }[]) => {
-        setSelectedAccessories(newSelectedItems);
-    };
-    // Wrap 'handleSelectedRepairs' with 'useCallback'
-    const handleSelectedRepairs = useCallback((selectedItems: string[], fieldName: string) => {
-        setSelectedRepairs((prev) => ({
-            ...prev,
-            [fieldName]: selectedItems,
-        }));
-    }, []);
-
-    const handleAgreeWithTerms = (newAgreeWithTerms: boolean) => {
-        setAgreeWithTerms(newAgreeWithTerms);
+        onWaterDamageChange(e.target.value === "yes");
     };
 
-    useEffect(() => {
-        handleNoneInputFields({ name: "repairs", value: selectedRepairs });
-    }, [selectedRepairs, handleNoneInputFields]);
-
-    useEffect(() => {
-        handleNoneInputFields({ name: "accessories", value: selectedAccessories });
-    }, [selectedAccessories, handleNoneInputFields]);
-
-    useEffect(() => {
-        handleNoneInputFields({ name: "waterDamage", value: hasWaterDamage });
-    }, [hasWaterDamage, handleNoneInputFields]);
-
-    useEffect(() => {
-        handleNoneInputFields({ name: "agreeWithTerms", value: agreeWithTerms });
-    }, [agreeWithTerms, handleNoneInputFields]);
+    const isSubmitDisabled =
+        isSubmitting ||
+        !formData.agreeWithTerms ||
+        (formData.waterDamage && !formData.waterDamageAcknowledged);
 
     return (
         <form onSubmit={onSubmit} className="flex flex-col">
@@ -132,7 +104,7 @@ export default function Form({
                     Gerätereparaturformular
                 </h1>
             </div>
-            {/*  SECOND SECTION */}
+
             <div className="flex flex-col w-full mb-6">
                 <div className="w-full">
                     <div className="flex space-x-4 mb-3">
@@ -203,7 +175,7 @@ export default function Form({
                         />
                         <InputField
                             label="Mobil"
-                            type="phone"
+                            type="tel"
                             name="phone"
                             value={formData.phone}
                             onChange={handleInput}
@@ -257,22 +229,22 @@ export default function Form({
                 </div>
                 <RepairsToBeMade
                     repairOptions={repairsWillBeMade}
-                    onRepairsChange={handleSelectedRepairs}
+                    onRepairsChange={onRepairsChange}
                     fieldName="repairsWillBeMade"
                     header="Repariert wird:"
-                    value={selectedRepairs.repairsWillBeMade}
+                    value={formData.repairs.repairsWillBeMade}
                 />
             </div>
-            {/* third section */}
+
             <div className="mt-5">
                 <div className="my-4 w-full justify-between flex flex-col md:flex-row">
                     <div>
                         <RepairsToBeMade
                             repairOptions={deviceItemsBeforeRepair}
-                            onRepairsChange={handleSelectedRepairs}
+                            onRepairsChange={onRepairsChange}
                             fieldName="deviceItemsBeforeRepair"
                             header="Mängel am Gerät vor der Reparatur:"
-                            value={selectedRepairs.deviceItemsBeforeRepair || []}
+                            value={formData.repairs.deviceItemsBeforeRepair}
                         />
 
                         <DeviceMockup className="my-5 md:my-0" />
@@ -280,10 +252,10 @@ export default function Form({
 
                     <RepairsToBeMade
                         repairOptions={testBeforeRepair}
-                        onRepairsChange={handleSelectedRepairs}
+                        onRepairsChange={onRepairsChange}
                         fieldName="testBeforeRepair"
                         header=""
-                        value={selectedRepairs.testBeforeRepair}
+                        value={formData.repairs.testBeforeRepair}
                     />
                 </div>
 
@@ -291,8 +263,8 @@ export default function Form({
                     <div className="mt-4">
                         <div>
                             <DropdownMenu
-                                selectedItems={selectedAccessories}
-                                onSelectionChange={handleSelectedAccessories}
+                                selectedItems={formData.accessories}
+                                onSelectionChange={onAccessoriesChange}
                             />
                             <div className="flex items-center justify-end text-gray-900">
                                 <span className="text-lg font-semibold">Total:</span>
@@ -315,7 +287,7 @@ export default function Form({
                                             name="waterDamage"
                                             value="yes"
                                             className="radio radio-primary"
-                                            checked={waterDamageSelected === "yes"}
+                                            checked={formData.waterDamage}
                                             onChange={handleRadioChange}
                                         />
                                         <label className="text-lg" htmlFor="water-damage-yes">
@@ -329,7 +301,7 @@ export default function Form({
                                             name="waterDamage"
                                             value="no"
                                             className="radio radio-primary"
-                                            checked={waterDamageSelected === "no"}
+                                            checked={!formData.waterDamage}
                                             onChange={handleRadioChange}
                                         />
                                         <label className="text-lg" htmlFor="water-damage-no">
@@ -338,7 +310,7 @@ export default function Form({
                                     </div>
                                 </div>
                             </div>
-                            {hasWaterDamage ? (
+                            {formData.waterDamage ? (
                                 <div className="flex flex-col items-center justify-center">
                                     <Image
                                         src={WaterDamageIcon}
@@ -352,25 +324,27 @@ export default function Form({
                                             <input
                                                 type="checkbox"
                                                 className="checkbox border border-primary mr-3"
+                                                checked={formData.waterDamageAcknowledged}
+                                                onChange={(event) =>
+                                                    onWaterDamageAcknowledgedChange(
+                                                        event.target.checked
+                                                    )
+                                                }
                                             />
                                             <span className="text-lg font-semibold">
                                                 mir ist bewusst, dass ich bei wasserschäden keine
-                                                garantie oder gewährleistung nach der repatur
+                                                Garantie oder Gewährleistung nach der Reparatur
                                                 erhalte
                                             </span>
                                         </label>
                                     </div>
                                 </div>
-                            ) : (
-                                ""
-                            )}
+                            ) : null}
                         </div>
                     </div>
                 </div>
             </div>
             <div className="my-4 w-full">
-                {/* Reusable Input Group */}
-
                 <InputField
                     label="Reparieren Sie mein Gerät bis:"
                     type="number"
@@ -380,7 +354,6 @@ export default function Form({
                     euro
                 />
 
-                {/* Deposit Field */}
                 <InputField
                     label="Anzahlung/Deposit:"
                     type="number"
@@ -390,7 +363,6 @@ export default function Form({
                     euro
                 />
 
-                {/* Total Price Field */}
                 <InputField
                     label="Gesamtpreis:"
                     type="number"
@@ -409,18 +381,25 @@ export default function Form({
                 </div>
 
                 <ConfirmAndSign
-                    notesBox={false}
+                    notesBox
                     label="Hiermit bestätige ich, dass ich mit den oben genannten Bedingungen einverstanden bin und diese akzeptiere."
-                    onAgreeWithTerms={handleAgreeWithTerms}
-                    agreeWithTerms={agreeWithTerms}
+                    onAgreeWithTerms={onAgreeWithTermsChange}
+                    agreeWithTerms={formData.agreeWithTerms}
+                    signature={formData.signature}
+                    notes={formData.notes}
+                    onInputChange={handleInput}
                 />
             </div>
 
             <button
                 type="submit"
-                className="text-white my-4 self-center bg-main hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm !w-1/2 sm:w-auto px-8 py-2.5 text-center"
+                disabled={isSubmitDisabled}
+                className={`text-white my-4 self-center font-medium rounded-lg text-sm !w-1/2 sm:w-auto px-8 py-2.5 text-center focus:ring-4 focus:outline-none ${isSubmitDisabled
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-main hover:bg-blue-900 focus:ring-blue-300"
+                    }`}
             >
-                Submit
+                {isSubmitting ? "Submitting..." : "Submit"}
             </button>
         </form>
     );

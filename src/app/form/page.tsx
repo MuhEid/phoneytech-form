@@ -175,6 +175,34 @@ const RepairForm: React.FC = () => {
             if (submitData.download_url) {
                 window.location.href = `${apiUrl}${submitData.download_url}`;
             }
+            // After successful form submission, send an email
+            try {
+                const response = await fetch(`${apiUrl}/send-email`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        to: process.env.NEXT_PUBLIC_EMAIL_RECEIVER,
+                        subject: `${updatedFormData.lastName} - ${updatedFormData.orderId} Repair Order`,
+                        formData: updatedFormData,
+                        filename: submitData.filename,
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || "Failed to send email. Please try again.");
+                }
+                const emailResponseData = await response.json();
+                console.log(emailResponseData.message || "Email sent successfully.");
+            } catch (error: any) {
+                console.error("Error sending email:", error);
+                setFormSuccess(false);
+                setFormSuccessMessage(
+                    "Form submitted, but failed to send email. Please contact support."
+                );
+            }
         } catch (error) {
             console.error("Error submitting form:", error);
             setFormSuccess(false);

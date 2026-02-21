@@ -19,17 +19,10 @@ export const calculateAccessoryTotal = (accessories: { name: string; price: numb
  * Calculate total price from accessories and manual inputs
  */
 export const calculateTotalPrice = (
-    accessories: { name: string; price: number }[],
     accessoryTotal: number,
-    repairMaxPrice: number | null,
-    deposit: number | null,
-    manualTotalPrice: number | null
+    _repairMaxPrice: number | null,
+    _deposit: number | null
 ): number => {
-    // If manualTotalPrice is provided, use it (user override)
-    if (manualTotalPrice !== null && manualTotalPrice > 0) {
-        return manualTotalPrice;
-    }
-
     // Otherwise, compute from accessories + deposit
     // For now, totalPrice = totalAccessoryPrice (can be extended with repairMaxPrice logic later)
     return accessoryTotal;

@@ -1,6 +1,7 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { TiDelete, TiArrowSortedDown } from "react-icons/ti";
 import { FaEuroSign } from "react-icons/fa";
+import { AccessoryItem } from "@/types";
 
 const accessoryItems: string[] = [
     "Hülle",
@@ -12,8 +13,8 @@ const accessoryItems: string[] = [
 ];
 
 interface DropdownMenuProps {
-    selectedItems: { name: string; price: number }[];
-    onSelectionChange: (selectedItems: { name: string; price: number }[]) => void;
+    selectedItems: AccessoryItem[];
+    onSelectionChange: (selectedItems: AccessoryItem[]) => void;
 }
 
 const DropdownMenu = ({ selectedItems, onSelectionChange }: DropdownMenuProps) => {
@@ -31,13 +32,12 @@ const DropdownMenu = ({ selectedItems, onSelectionChange }: DropdownMenuProps) =
             const newItem = { name: selectedAccessory, price: currentPrice };
             const newSelectedItems = [...selectedItems, newItem];
             onSelectionChange(newSelectedItems);
-            // Reset input fields
             setSelectedAccessory(null);
             setCurrentPrice(null);
         }
     };
 
-    const handleRemove = (item: { name: string; price: number }) => {
+    const handleRemove = (item: AccessoryItem) => {
         const newSelectedItems = selectedItems.filter((ele) => ele.name !== item.name);
         onSelectionChange(newSelectedItems);
     };
@@ -74,13 +74,12 @@ const DropdownMenu = ({ selectedItems, onSelectionChange }: DropdownMenuProps) =
                     </ul>
                 </div>
 
-                {/* Show input field for price if an accessory is selected */}
                 {selectedAccessory && (
                     <div className="mt-4">
                         <h5 className="font-semibold">Set price for {selectedAccessory}</h5>
                         <input
                             type="number"
-                            className="input  w-full max-w-xs mt-2"
+                            className="input w-full max-w-xs mt-2"
                             placeholder="Enter price"
                             value={currentPrice ?? ""}
                             onChange={(e) => {
@@ -96,7 +95,7 @@ const DropdownMenu = ({ selectedItems, onSelectionChange }: DropdownMenuProps) =
                             step={0.01}
                             inputMode="decimal"
                         />
-                        <button className="btn btn-main mt-2 ml-2" onClick={handleAddItem}>
+                        <button type="button" className="btn btn-main mt-2 ml-2" onClick={handleAddItem}>
                             Add {selectedAccessory}
                         </button>
                     </div>
@@ -112,6 +111,7 @@ const DropdownMenu = ({ selectedItems, onSelectionChange }: DropdownMenuProps) =
                             </div>
 
                             <button
+                                type="button"
                                 className=" text-red-500 hover:text-red-700 ml-2"
                                 onClick={() => handleRemove(item)}
                             >

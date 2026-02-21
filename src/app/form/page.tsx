@@ -1,8 +1,11 @@
-"use client";
+﻿"use client";
 import Form from "@/components/Form";
 import { generateOrderId, calculateAccessoryTotal, calculateTotalPrice } from "@/utils";
-import { FormData } from "@/types";
-import React, { useState, useEffect } from "react";
+import { AccessoryItem, FormData, RepairsSelection } from "@/types";
+import React, { useCallback, useEffect, useState } from "react";
+
+type NumericFieldName = "repairMaxPrice" | "deposit" | "totalPrice";
+const numericFields = new Set<NumericFieldName>(["repairMaxPrice", "deposit", "totalPrice"]);
 
 const RepairForm: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
@@ -18,21 +21,48 @@ const RepairForm: React.FC = () => {
         serialNumber: "",
         color: "",
         simPin: "",
+        repairs: {
+            repairsWillBeMade: [],
+            testBeforeRepair: [],
+            deviceItemsBeforeRepair: [],
+        },
+        accessories: [],
+        waterDamage: false,
+        waterDamageAcknowledged: false,
+        agreeWithTerms: false,
         totalAccessoryPrice: 0,
-        repairs: {},
         deviceUnlockCode: "",
         repairMaxPrice: null,
         deposit: null,
         totalPrice: null,
         notes: "",
+        signature: "",
         orderId: "",
     });
     const [formSuccess, setFormSuccess] = useState(false);
     const [formSuccessMessage, setFormSuccessMessage] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isTotalPriceManual, setIsTotalPriceManual] = useState(false);
 
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const fieldName = e.target.name;
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const fieldName = e.target.name as keyof FormData;
         const fieldValue = e.target.value;
+
+        if (numericFields.has(fieldName as NumericFieldName)) {
+            const parsedValue = fieldValue === "" ? null : Number(fieldValue);
+            const numericValue =
+                parsedValue !== null && Number.isFinite(parsedValue) ? parsedValue : null;
+
+            if (fieldName === "totalPrice") {
+                setIsTotalPriceManual(numericValue !== null);
+            }
+
+            setFormData((prevState) => ({
+                ...prevState,
+                [fieldName]: numericValue,
+            }));
+            return;
+        }
 
         setFormData((prevState) => ({
             ...prevState,
@@ -40,67 +70,92 @@ const RepairForm: React.FC = () => {
         }));
     };
 
-    const handleNoneInputFields = (data: { name: keyof FormData; value: any }) => {
-        if (typeof data === "object" && data.name) {
-            setFormData((prevState) => {
-                // Check if the value has actually changed before updating the state
-                if (prevState[data.name] !== data.value) {
-                    return {
-                        ...prevState,
-                        [data.name]: data.value,
-                    };
-                }
-                return prevState;
-            });
-        }
-    };
+    const handleRepairsChange = useCallback(
+        (selectedItems: string[], fieldName: keyof RepairsSelection) => {
+            setFormData((prevState) => ({
+                ...prevState,
+                repairs: {
+                    ...prevState.repairs,
+                    [fieldName]: selectedItems,
+                },
+            }));
+        },
+        []
+    );
 
-    // Compute prices whenever accessories, repairMaxPrice, or deposit changes
-    useEffect(() => {
-        const accessories = (formData.accessories as { name: string; price: number }[]) || [];
-        const accessoryTotal = calculateAccessoryTotal(accessories);
-
-        // For deposit and repairMaxPrice, convert from form input (could be string) to number
-        const depositValue = typeof formData.deposit === 'string'
-            ? parseFloat(formData.deposit) || 0
-            : formData.deposit || 0;
-        const repairMaxValue = typeof formData.repairMaxPrice === 'string'
-            ? parseFloat(formData.repairMaxPrice) || null
-            : formData.repairMaxPrice;
-        const manualTotalValue = typeof formData.totalPrice === 'string'
-            ? parseFloat(formData.totalPrice) || null
-            : formData.totalPrice;
-
-        const calculatedTotalPrice = calculateTotalPrice(
-            accessories,
-            accessoryTotal,
-            repairMaxValue,
-            depositValue,
-            manualTotalValue
-        );
-
-        // Update totalAccessoryPrice and totalPrice only if no manual override
+    const handleAccessoriesChange = useCallback((selectedItems: AccessoryItem[]) => {
         setFormData((prevState) => ({
             ...prevState,
-            totalAccessoryPrice: accessoryTotal,
-            totalPrice: manualTotalValue !== null && manualTotalValue > 0
-                ? manualTotalValue
-                : calculatedTotalPrice,
+            accessories: selectedItems,
         }));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData.accessories, formData.deposit, formData.repairMaxPrice]);
+    }, []);
+
+    const handleWaterDamageChange = useCallback((hasWaterDamage: boolean) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            waterDamage: hasWaterDamage,
+            waterDamageAcknowledged: hasWaterDamage ? prevState.waterDamageAcknowledged : false,
+        }));
+    }, []);
+
+    const handleWaterDamageAcknowledgedChange = useCallback((acknowledged: boolean) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            waterDamageAcknowledged: acknowledged,
+        }));
+    }, []);
+
+    const handleAgreeWithTermsChange = useCallback((agreeWithTerms: boolean) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            agreeWithTerms,
+        }));
+    }, []);
+
+    useEffect(() => {
+        const accessoryTotal = calculateAccessoryTotal(formData.accessories);
+        const calculatedTotalPrice = calculateTotalPrice(
+            accessoryTotal,
+            formData.repairMaxPrice,
+            formData.deposit
+        );
+
+        const nextTotalPrice = isTotalPriceManual
+            ? formData.totalPrice ?? calculatedTotalPrice
+            : calculatedTotalPrice;
+
+        setFormData((prevState) => {
+            if (
+                prevState.totalAccessoryPrice === accessoryTotal &&
+                prevState.totalPrice === nextTotalPrice
+            ) {
+                return prevState;
+            }
+
+            return {
+                ...prevState,
+                totalAccessoryPrice: accessoryTotal,
+                totalPrice: nextTotalPrice,
+            };
+        });
+    }, [formData.accessories, formData.deposit, formData.repairMaxPrice, formData.totalPrice, isTotalPriceManual]);
 
     const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Generate orderId and update formData
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        if (!apiUrl) {
+            setFormSuccess(false);
+            setFormSuccessMessage("Missing NEXT_PUBLIC_API_URL. Please check your environment config.");
+            return;
+        }
+
         const newOrderId = generateOrderId();
         const updatedFormData = { ...formData, orderId: newOrderId };
 
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
         try {
-            // Submit form data to the database API
+            setIsSubmitting(true);
+
             const submitResponse = await fetch(`${apiUrl}/submit`, {
                 method: "POST",
                 headers: {
@@ -113,30 +168,40 @@ const RepairForm: React.FC = () => {
                 throw new Error("Failed to submit the data. Please try again.");
             }
 
-            // Handle response from submission API
             const submitData = await submitResponse.json();
             setFormSuccess(true);
-            setFormSuccessMessage(submitData.submission_text);
+            setFormSuccessMessage(submitData.submission_text || "Form submitted successfully.");
 
-            // Optionally, trigger PDF download
             if (submitData.download_url) {
                 window.location.href = `${apiUrl}${submitData.download_url}`;
             }
-        } catch (error: any) {
+        } catch (error) {
             console.error("Error submitting form:", error);
-            // Optionally, notify the user about the submission failure
             setFormSuccess(false);
             setFormSuccessMessage("Failed to submit the form. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
         <div className="container my-8 capitalize">
+            {formSuccessMessage ? (
+                <p className={`mb-4 text-sm ${formSuccess ? "text-green-700" : "text-red-700"}`}>
+                    {formSuccessMessage}
+                </p>
+            ) : null}
+
             <Form
                 onSubmit={handleSubmitForm}
                 handleInput={handleInput}
                 formData={formData}
-                handleNoneInputFields={handleNoneInputFields}
+                onRepairsChange={handleRepairsChange}
+                onAccessoriesChange={handleAccessoriesChange}
+                onWaterDamageChange={handleWaterDamageChange}
+                onWaterDamageAcknowledgedChange={handleWaterDamageAcknowledgedChange}
+                onAgreeWithTermsChange={handleAgreeWithTermsChange}
+                isSubmitting={isSubmitting}
             />
         </div>
     );
